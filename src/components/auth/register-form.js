@@ -28,7 +28,7 @@ export default function RegisterFormDialog() {
     const [password2, setPassword2] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [errors, setErrors] = useState('');
+    const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
 
     let userData = {

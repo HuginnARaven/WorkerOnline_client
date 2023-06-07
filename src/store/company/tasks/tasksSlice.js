@@ -10,22 +10,29 @@ export const tasksSlice = createSlice({
     },
     reducers: {
         SetTasksList: (state, action) => {
-            state.tasks_list = action.payload.results || []
+            state.tasks_list = action.payload || []
         },
         AddTask: (state, action) => {
             state.tasks_list.push(action.payload)
         },
         EditTask: (state, action) => {
-            const indexOfWorker = state.tasks_list.findIndex(object => {
+            const indexOfTask = state.tasks_list.findIndex(object => {
                 return object.id === action.payload.id;
             });
-            state.tasks_list[indexOfWorker] = action.payload;
+            state.tasks_list[indexOfTask] = action.payload;
+        },
+        AppointTask: (state, action) => {
+            const indexOfTask = state.tasks_list.findIndex(object => {
+                return object.id === action.payload.task_appointed;
+            });
+            state.tasks_list[indexOfTask].is_appointed = true;
+            state.tasks_list[indexOfTask].recommended_workers = {};
         },
         DeleteTask: (state, action) => {
-            const indexOfWorker = state.tasks_list.findIndex(object => {
+            const indexOfTask = state.tasks_list.findIndex(object => {
                 return object.id === action.payload.id;
             });
-            state.tasks_list.splice(indexOfWorker, 1);
+            state.tasks_list.splice(indexOfTask, 1);
         },
         SetError: (state, action) => {
             state.errors.push(action.payload)
@@ -41,6 +48,6 @@ export const tasksSlice = createSlice({
     }
 })
 
-export const {SetTasksList, AddTask, EditTask, DeleteTask, SetError} = tasksSlice.actions
+export const {SetTasksList, AddTask, EditTask, DeleteTask, AppointTask, SetTaskRecommendations, SetError} = tasksSlice.actions
 
 export default tasksSlice.reducer

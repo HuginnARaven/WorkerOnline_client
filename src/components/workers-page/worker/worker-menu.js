@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import {deleteWorker, editWorker} from "../../../store/company/workers/workersAction";
+import {useNavigate} from "react-router-dom";
 
 export default function WorkerMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -145,6 +146,13 @@ export default function WorkerMenu(props) {
         }
     };
 
+    const navigate = useNavigate ()
+
+    function handleGetReport() {
+        navigate('report', { state: { id: worker_data.id} });
+        handleClose()
+    }
+
     const qualifications_list = useSelector((state) => state.qualifications.qualifications_list);
 
     return (
@@ -165,6 +173,7 @@ export default function WorkerMenu(props) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
+                <MenuItem onClick={handleGetReport}>GetReport</MenuItem>
                 <MenuItem onClick={handleEditClick}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
             </Menu>
@@ -331,7 +340,7 @@ export default function WorkerMenu(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseEditForm}>Cancel</Button>
-                    <Button type="submit" form="workerCreateForm">Create</Button>
+                    <Button type="submit" form="workerCreateForm">Save</Button>
                 </DialogActions>
             </Dialog>
             <Dialog

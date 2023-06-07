@@ -7,6 +7,10 @@ import tasksSliceReducer from "./company/tasks/tasksSlice";
 import workerVotingReducer from "./company/worker-voting/workerVotingSlice";
 import qualificationsSliceReducer from "./company/qualifications/qualificationsSlice";
 import workersSliceReducer from "./company/workers/workersSlice";
+import tasksAppointmentsSliceReducer from "./company/tasksAppointments/tasksAppointmentsSlice";
+import getLogsSliceReducer from "./company/getLogs/getLogsSlice";
+import iotSliceReducer from "./company/iot/iotSlice";
+import workerReportSliceReducer from "./company/workerReport/workerReportSlice";
 
 export default configureStore({
     reducer: {
@@ -18,5 +22,9 @@ export default configureStore({
         worker_voting: workerVotingReducer,
         qualifications: qualificationsSliceReducer,
         workers: workersSliceReducer,
+        appointments: tasksAppointmentsSliceReducer,
+        logs: getLogsSliceReducer,
+        iot: iotSliceReducer,
+        worker_report: workerReportSliceReducer,
     },
 })

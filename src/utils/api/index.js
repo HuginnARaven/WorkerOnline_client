@@ -1,5 +1,6 @@
 import axios from "axios";
 import {qualificationsSlice} from "../../store/company/qualifications/qualificationsSlice";
+import {getAppointments} from "../../store/company/tasksAppointments/tasksAppointmentsAction";
 
 // let baseApi = axios.create({
 //     baseURL: 'http://127.0.0.1:8000/api/',
@@ -56,15 +57,6 @@ export let userAPI = {
             }
         }).then(res => res.data);
     },
-
-    // logout(token) {
-    //     const userToken = localStorage.getItem('access_token')
-    //     return baseApi2.post(`logout/`, {
-    //         headers: {
-    //             Authorization: "Token " + token || userToken
-    //         }
-    //     }).then(res => res.data);
-    // },
 }
 
 export let companyAPI = {
@@ -94,6 +86,7 @@ export let companyAPI = {
             }
         }).then(res => res.data);
     },
+
     getTasks(token) {
         const userToken = localStorage.getItem('access_token')
         return baseApi2.get(`company/task/`, {
@@ -105,6 +98,44 @@ export let companyAPI = {
             }
         }).then(res => res.data);
     },
+
+    createTask(data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.post(`company/task/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken,
+                "Accept-Language": "uk-ua"
+            }
+        }).then(res => res.data);
+    },
+
+    editTask(taskId, data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.put(`company/task/${taskId}/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    deleteTask(taskId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.delete(`company/task/${taskId}/`,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    getTaskRecommendations(taskId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`company/task-recommendation/${taskId}/`,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
     getVoting(token) {
         const userToken = localStorage.getItem('access_token')
         return baseApi2.get(`company/voting/`, {
@@ -210,12 +241,96 @@ export let companyAPI = {
         }).then(res => res.data);
     },
 
+    editWorkerSchedule(scheduleId, data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.patch(`company/worker-schedule/${scheduleId}/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
     deleteWorker(workerId) {
         const userToken = localStorage.getItem('access_token')
         return baseApi2.delete(`company/worker/${workerId}/`,{
             headers: {
                 Authorization: "Bearer " + userToken
             }
+        }).then(res => res.data);
+    },
+
+    getAppointments(token, search) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`company/appointment/`, {
+            headers: {
+                Authorization: "Bearer " + token || userToken
+            },
+        }).then(res => res.data);
+    },
+
+    createAppointment(data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.post(`company/appointment/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    commentAppointment(data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.post(`company/comment-task/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    deleteComment(commentId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.delete(`company/comment-task/${commentId}/`,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    getLogs(token) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`company/logs/`, {
+            headers: {
+                Authorization: "Bearer " + token || userToken
+            },
+            params: {
+                page_size: 1000
+            }
+        }).then(res => res.data.results);
+    },
+
+    getSupervisors(token) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`iot/company-options/`, {
+            headers: {
+                Authorization: "Bearer " + token || userToken
+            },
+        }).then(res => res.data);
+    },
+
+    editSupervisor(supervisorId, data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.patch(`iot/company-options/${supervisorId}/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    getWorkerReport(workerId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`company/worker-report/${workerId}/`, {
+            headers: {
+                Authorization: "Bearer " + userToken
+            },
         }).then(res => res.data);
     },
 }

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {companyAPI} from "../../../utils/api";
-import {AddWorker, DeleteWorker, EditWorker, SetError, SetWorkersList} from "./workersSlice";
+import {AddWorker, DeleteWorker, EditWorker, EditWorkerSchedule, SetError, SetWorkersList} from "./workersSlice";
 import dayjs from "dayjs";
 
 
@@ -52,6 +52,50 @@ export const createWorker = createAsyncThunk(
 
 
             return resWorkerCreation
+        } catch (err) {
+            let error = err // cast the error for access
+
+            if (!error.response) {
+                throw error
+            }
+            const errorMsg = error.response.data
+            const json = JSON.stringify(errorMsg)
+            return thunkAPI.rejectWithValue(json)
+        }
+    }
+)
+
+export const editWorkerSchedule = createAsyncThunk(
+    'workers/create',
+    async (workerScheduleData, thunkAPI) => {
+        try {
+            const {
+                id,
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                saturday,
+                sunday,
+            } = workerScheduleData
+
+            const reqbody = {
+                monday: monday,
+                tuesday: tuesday,
+                wednesday: wednesday,
+                thursday: thursday,
+                friday: friday,
+                saturday: saturday,
+                sunday: sunday
+            }
+
+            const resWorkerScheduleUpdate = await companyAPI.editWorkerSchedule(id, reqbody);
+
+            thunkAPI.dispatch(EditWorkerSchedule(resWorkerScheduleUpdate))
+
+
+            return resWorkerScheduleUpdate
         } catch (err) {
             let error = err // cast the error for access
 

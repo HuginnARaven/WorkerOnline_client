@@ -27,6 +27,8 @@ import HelpOutlineSharpIcon from '@mui/icons-material/HelpOutlineSharp';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import ThumbsUpDownOutlinedIcon from '@mui/icons-material/ThumbsUpDownOutlined';
 import ElevatorIcon from '@mui/icons-material/Elevator';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import MemoryIcon from '@mui/icons-material/Memory';
 
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
@@ -111,6 +113,8 @@ const  dashboardPages = [
     {text: "Workers", href:"workers", icon: <AccessibilityNewIcon/>},
     {text: "Tasks", href:"tasks", icon: <AddchartIcon/>},
     {text: "Tasks appointments", href:"tasks-appointments", icon: <ReceiptLongIcon/>},
+    {text: "Workers logs", href:"workers-logs", icon: <MenuBookIcon/>},
+    {text: "Supervisors", href:"iot", icon: <MemoryIcon/>},
     {text: "Voting", href:"voting", icon: <ThumbsUpDownOutlinedIcon/>},
     {text: "Auto appointment", href:"auto-appointment", icon: <IntegrationInstructionsIcon/>}
 ];

@@ -37,13 +37,13 @@ export default function WorkersPage() {
     };
 
     return (
-        <Container maxWidth="xl">
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <>
+            <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <Toolbar
                     sx={{
                         borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
                         borderRadius: '5px',
-                        width: '600px',
+                        width: '80%',
                         textAlign: 'center',
                     }}
                 >
@@ -55,7 +55,7 @@ export default function WorkersPage() {
                     >
                         <Grid item>
                             <IconButton>
-                                <PersonSearchIcon color="inherit" sx={{ display: 'block' }} />
+                                <PersonSearchIcon color="inherit" sx={{display: 'block'}}/>
                             </IconButton>
                         </Grid>
                         <Grid item xs>
@@ -64,7 +64,7 @@ export default function WorkersPage() {
                                 placeholder="Search by name"
                                 InputProps={{
                                     disableUnderline: true,
-                                    sx: { fontSize: 'default' },
+                                    sx: {fontSize: 'default'},
                                 }}
                                 variant="standard"
                                 value={searchTerm}
@@ -99,6 +99,6 @@ export default function WorkersPage() {
                     ))}
                 </Grid>
             </Box>
-        </Container>
+        </>
     );
 }

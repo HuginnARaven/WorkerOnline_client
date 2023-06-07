@@ -12,6 +12,7 @@ import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
 import Checkbox from "@mui/material/Checkbox";
 import {green, red} from "@mui/material/colors";
+import {editWorkerSchedule} from "../../../store/company/workers/workersAction";
 
 export default function WorkerScheduleEdit(props) {
     const [open, setOpen] = React.useState(false);
@@ -29,10 +30,6 @@ export default function WorkerScheduleEdit(props) {
 
     const handleClickOpen = () => {
         setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
         setMonday(props.monday);
         setTuesday(props.tuesday);
         setWednesday(props.wednesday);
@@ -41,6 +38,10 @@ export default function WorkerScheduleEdit(props) {
         setSaturday(props.saturday);
         setSunday(props.sunday);
         setErrors({});
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     let scheduleData = {
@@ -55,10 +56,20 @@ export default function WorkerScheduleEdit(props) {
     }
 
     const dispatch = useDispatch();
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(scheduleData)
+        const res = dispatch(editWorkerSchedule(scheduleData))
+        res.then((value) => {
+            console.log(value)
+            if (value.error){
+                let errorMsg = JSON.parse(value.payload)
+                setErrors(errorMsg)
+                console.log(errors)
+            }else {
+                handleClose();
+            }
+        });
     };
 
     let day_of_week_elem = [

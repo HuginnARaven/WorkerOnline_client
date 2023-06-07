@@ -29,7 +29,7 @@ const RowDetail = ({ row }) => (
     </div>
 );
 
-export default function TestComponent() {
+export default function WorkersLogsPage() {
     const [columns] = useState([
         { name: 'username', title: 'Worker' },
         { name: 'title', title: 'Task' },
@@ -73,7 +73,7 @@ export default function TestComponent() {
                 columns={columns}
             >
                 <SortingState
-                    defaultSorting={[{ columnName: 'localized_datetime', direction: 'asc' }]}
+                    defaultSorting={[{ columnName: 'localized_datetime', direction: 'desc' }]}
                 />
                 <IntegratedSorting />
                 <RowDetailState

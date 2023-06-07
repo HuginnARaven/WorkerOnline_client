@@ -301,8 +301,8 @@ export default function Header() {
             <Box component="main" sx={{ flexGrow: 1, p: 3}}>
                 <DrawerHeader />
                 <Outlet />
-                {renderPart === 'Dev'  && isLogin ? <AutoAppointmentPage /> : null}
-                {renderPart === 'Appointments' && isLogin ? <TestComponent /> : null}
+                {/*{renderPart === 'Dev'  && isLogin ? <AutoAppointmentPage /> : null}*/}
+                {/*{renderPart === 'Appointments' && isLogin ? <TestComponent /> : null}*/}
             </Box>
         </Box>
     );

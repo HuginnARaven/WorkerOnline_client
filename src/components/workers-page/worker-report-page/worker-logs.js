@@ -29,13 +29,13 @@ const RowDetail = ({ row }) => (
     </div>
 );
 
-export default function TestComponent() {
+export default function WorkerLogs(props) {
     const [columns] = useState([
-        { name: 'username', title: 'Worker' },
         { name: 'title', title: 'Task' },
         { name: 'type', title: 'Log type' },
         { name: 'localized_datetime', title: 'Datetime' },
     ]);
+
     const [rows, setRows] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [pageSize, setPageSize] = useState(5);
@@ -45,7 +45,7 @@ export default function TestComponent() {
     const [pageSizes] = useState([5, 10, 15, 20, 1000]);
 
     const getQueryString = () => (
-        `${URL}?page_size=${pageSize}&page=${currentPage+1}`
+        `${URL}?worker=${props.workerId}&page_size=${pageSize}&page=${currentPage+1}`
     );
     const userToken = localStorage.getItem('access_token')
     const loadData = () => {

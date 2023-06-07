@@ -21,6 +21,12 @@ export const workersSlice = createSlice({
             });
             state.workers_list[indexOfWorker] = action.payload;
         },
+        EditWorkerSchedule: (state, action) => {
+            const indexOfWorker = state.workers_list.findIndex(object => {
+                return object.id === action.payload.worker_id;
+            });
+            state.workers_list[indexOfWorker].worker_schedule = action.payload;
+        },
         DeleteWorker: (state, action) => {
             const indexOfWorker = state.workers_list.findIndex(object => {
                 return object.id === action.payload.id;
@@ -41,6 +47,6 @@ export const workersSlice = createSlice({
     }
 })
 
-export const {SetWorkersList, AddWorker, EditWorker, DeleteWorker, SetError} = workersSlice.actions
+export const {SetWorkersList, AddWorker, EditWorker, EditWorkerSchedule, DeleteWorker, SetError} = workersSlice.actions
 
 export default workersSlice.reducer
