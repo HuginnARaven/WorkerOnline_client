@@ -44,6 +44,7 @@ export default function IotItem(props) {
                    spacing={2}
                    mt={2}
                    mb={2}>
+                <Typography variant="subtitle1"># {supervisor.id}</Typography>
                 {supervisor.worker ? (<Typography variant="subtitle1">Worker: {supervisor.username}</Typography>) : null}
                 <Typography variant="subtitle1">Admin mode: {supervisor.in_admin_mode ? "Yes" : "No"}</Typography>
                 <Typography variant="subtitle1">Is active: {supervisor.is_active ? "Yes" : "No"}</Typography>

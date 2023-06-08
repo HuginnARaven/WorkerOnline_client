@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import {Button, Container, IconButton, Stack} from "@mui/material";
+import {Container, IconButton} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import WorkerItem from "./worker/worker-item";
@@ -37,7 +37,7 @@ export default function WorkersPage() {
     };
 
     return (
-        <>
+        <Container maxWidth={"xl"}>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <Toolbar
                     sx={{
@@ -99,6 +99,6 @@ export default function WorkersPage() {
                     ))}
                 </Grid>
             </Box>
-        </>
+        </Container>
     );
 }

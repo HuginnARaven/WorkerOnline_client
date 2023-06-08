@@ -173,7 +173,7 @@ export default function WorkerMenu(props) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleGetReport}>GetReport</MenuItem>
+                <MenuItem onClick={handleGetReport}>Get report</MenuItem>
                 <MenuItem onClick={handleEditClick}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
             </Menu>

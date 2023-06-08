@@ -17,7 +17,6 @@ export const login = createAsyncThunk(
             localStorage.setItem('access_token', resLogin.access)
             localStorage.setItem('refresh_token', resLogin.refresh)
             thunkAPI.dispatch(SetToken(resLogin.access))
-
             return resLogin
         } catch (err) {
             let error = err // cast the error for access
@@ -62,9 +61,14 @@ export const register = createAsyncThunk(
 
             const {username, password, password2, email, name, description} = userData
 
-            const resLogin = await companyAPI.register({username, password, password2, email, name, description});
+            const resRegister = await companyAPI.register({username, password, password2, email, name, description});
+            const resLogin = await userAPI.loginJWT({username, password});
+            localStorage.setItem('access_token', resLogin.access)
+            localStorage.setItem('refresh_token', resLogin.refresh)
+            thunkAPI.dispatch(SetToken(resLogin.access))
+            thunkAPI.dispatch(SetUser({username, email,  role: "C", description, name}))
 
-            return resLogin
+            return resRegister
         } catch (err) {
             let error = err // cast the error for access
 
@@ -73,9 +77,7 @@ export const register = createAsyncThunk(
             }
 
             const errorMsg = error.response.data
-            thunkAPI.dispatch(SetAuthError(errorMsg.non_field_errors[0]))
             const json = JSON.stringify(errorMsg)
-            console.log(errorMsg)
             return thunkAPI.rejectWithValue(json)
         }
     }

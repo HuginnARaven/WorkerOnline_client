@@ -7,44 +7,49 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress} from "@mui/material";
-import {login, register} from "../../store/auth/authAction";
+import {CircularProgress, FormControl, InputLabel, MenuItem, Select, Stack} from "@mui/material";
+import {register} from "../../store/auth/authAction";
 import { useState } from 'react';
-import {getUser} from "../../store/user/userAction";
+import EditIcon from "@mui/icons-material/Edit";
+import {timezones_list} from "../../utils/timezones_list";
+import {editUser} from "../../store/user/userAction";
 
-export default function RegisterFormDialog() {
+export default function ProfileEditForm(props) {
     const [open, setOpen] = React.useState(false);
+    const [username, setUsername] = useState(props.username);
+    const [email, setEmail] = useState(props.email);
+    const [name, setName] = useState(props.name);
+    const [description, setDescription] = useState(props.description);
+    const [timezone, setTimezone] = useState(props.timezone);
+    const [errors, setErrors] = useState({});
+    const dispatch = useDispatch();
 
     const handleClickOpen = () => {
         setOpen(true);
+        setUsername(props.username);
+        setEmail(props.email);
+        setName(props.name);
+        setDescription(props.description);
+        setTimezone(props.timezone);
+        setErrors({})
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [errors, setErrors] = useState({});
-    const dispatch = useDispatch();
-
     let userData = {
         username: username,
         email: email,
-        password: password,
-        password2: password2,
         name: name,
         description: description,
+        timezone: timezone,
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userData)
-        const res = dispatch(register(userData));
+        console.log(userData);
+        const res = dispatch(editUser(userData));
         res.then((value) => {
             if (value.error){
                 console.log(value)
@@ -57,20 +62,18 @@ export default function RegisterFormDialog() {
         });
     };
 
-    const is_loading = useSelector((state) => state.auth.isLoading);
-
     return (
         <div>
-            <Button sx={{my: 2, color: 'white', display: 'block'}} onClick={handleClickOpen}>
-                Signup
-            </Button>
+            <Stack direction={"row"} alignItems="center">
+                <Button variant="contained" sx={{ml:2, mr:2}} onClick={handleClickOpen} fullWidth>Edit profile <EditIcon/></Button>
+            </Stack>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Signup form</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Register to use website!
                     </DialogContentText>
-                    <form onSubmit={handleSubmit} id="registerForm">
+                    <form onSubmit={handleSubmit} id="profileEditForm">
                         <TextField
                             autoFocus
                             error={errors.username}
@@ -95,28 +98,6 @@ export default function RegisterFormDialog() {
                             value={email} onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
-                            error={errors.password}
-                            helperText={errors.password}
-                            margin="dense"
-                            id="password"
-                            label="Password"
-                            type="password"
-                            fullWidth
-                            variant="standard"
-                            value={password} onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <TextField
-                            error={errors.password2}
-                            helperText={errors.password2}
-                            margin="dense"
-                            id="password2"
-                            label="Repeat password"
-                            type="password"
-                            fullWidth
-                            variant="standard"
-                            value={password2} onChange={(e) => setPassword2(e.target.value)}
-                        />
-                        <TextField
                             error={errors.name}
                             helperText={errors.name}
                             margin="dense"
@@ -127,11 +108,37 @@ export default function RegisterFormDialog() {
                             variant="standard"
                             value={name} onChange={(e) => setName(e.target.value)}
                         />
+                        <TextField
+                            error={errors.description}
+                            helperText={errors.description}
+                            margin="dense"
+                            id="name"
+                            label="Description"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            multiline
+                            value={description} onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <FormControl fullWidth  variant="standard">
+                            <InputLabel id="demo-simple-select-label">Timezone</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="task-difficulties"
+                                value={timezone}
+                                label="Timezone"
+                                onChange={(e) => {setTimezone(e.target.value)}}
+                            >
+                                {timezones_list.map((timezones_item) => (
+                                    <MenuItem key={`timezone-item-${timezones_item}`} value={timezones_item}>{timezones_item}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                     </form>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="registerForm">{is_loading ? <CircularProgress />: 'Signup'}</Button>
+                    <Button type="submit" form="profileEditForm">Save</Button>
                 </DialogActions>
             </Dialog>
         </div>

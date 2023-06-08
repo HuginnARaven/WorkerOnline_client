@@ -1,6 +1,4 @@
 import axios from "axios";
-import {qualificationsSlice} from "../../store/company/qualifications/qualificationsSlice";
-import {getAppointments} from "../../store/company/tasksAppointments/tasksAppointmentsAction";
 
 // let baseApi = axios.create({
 //     baseURL: 'http://127.0.0.1:8000/api/',
@@ -27,10 +25,6 @@ export let userAPI = {
         return baseApi2.post(`token/refresh/`, data).then(res => res.data);
     },
 
-    registerCompany(data) {
-        return baseApi2.post(`company/singup/`, data).then(res => res.data);
-    },
-
     getMe(token) {
         const userToken = localStorage.getItem('access_token')
         return baseApi2.get(`profile/`, {
@@ -52,6 +46,43 @@ export let userAPI = {
     editMe(data) {
         const userToken = localStorage.getItem('access_token')
         return baseApi2.put(`profile/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    getTechSupportMessages(token) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`user/tech-support/`, {
+            headers: {
+                Authorization: "Bearer " + token || userToken
+            }
+        }).then(res => res.data);
+    },
+
+    createTechSupportMessage(data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.post(`user/tech-support/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken,
+                "Accept-Language": "uk-ua"
+            }
+        }).then(res => res.data);
+    },
+
+    editTechSupportMessage(messageId, data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.put(`user/tech-support/${messageId}/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    deleteTechSupportMessage(messageId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.delete(`user/tech-support/${messageId}/`,{
             headers: {
                 Authorization: "Bearer " + userToken
             }

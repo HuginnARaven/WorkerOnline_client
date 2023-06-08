@@ -75,7 +75,7 @@ export default function TaskRecommendationForm(props) {
         <div>
             <Button onClick={handleClickOpen} color={"success"}>Appoint</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task appoint form</DialogTitle>
+                <DialogTitle>Task appoint form by recommendations</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Here you can appoint workers for this task

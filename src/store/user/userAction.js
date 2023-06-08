@@ -10,7 +10,7 @@ export const getUser = createAsyncThunk(
         try {
             const token = localStorage.getItem('access_token')
             const profileData = await userAPI.getMe((token));
-           //thunkAPI.dispatch(SetUser((profileData)))
+            thunkAPI.dispatch(SetUser((profileData)))
 
             return profileData
         } catch (err) {
@@ -40,15 +40,14 @@ export const getUser = createAsyncThunk(
 )
 
 export const editUser = createAsyncThunk(
-    'auth/login',
+    'user/edit',
     async (userData, thunkAPI) => {
         try {
 
             //const token = localStorage.getItem('access_token')
 
             const profileData = await userAPI.editMe((userData));
-            console.log(profileData)
-            //thunkAPI.dispatch(SetUser(profileData))
+            thunkAPI.dispatch(SetUser(profileData))
 
             return profileData
         } catch (err) {
@@ -66,7 +65,7 @@ export const editUser = createAsyncThunk(
 )
 
 export const changePassword = createAsyncThunk(
-    'auth/login',
+    'user/change-password',
     async (passwordData, thunkAPI) => {
         try {
             const profileData = await userAPI.changePassword(passwordData);

@@ -10,6 +10,7 @@ export const userSlice = createSlice({
         role: '',
         name: '',
         description: '',
+        timezone: '',
         is_authorized: false,
         errorMsg: null,
     },
@@ -18,11 +19,12 @@ export const userSlice = createSlice({
             state.errorMsg = action.payload
         },
         SetUser: (state, action) => {
-            state.username = action.payload.username || ''
-            state.email = action.payload.email || ''
-            state.role = action.payload.role || ''
-            state.description = action.payload.description || ''
-            state.name = action.payload.name || ''
+            state.username = action.payload.username
+            state.email = action.payload.email
+            state.role = action.payload.role
+            state.name = action.payload.name
+            state.description = action.payload.description
+            state.timezone = action.payload.timezone
             state.is_authorized = true;
         },
     },
