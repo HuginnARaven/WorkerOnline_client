@@ -12,8 +12,10 @@ import Alert from "@mui/material/Alert";
 import dayjs from "dayjs";
 import {DateTimePicker} from "@mui/x-date-pickers";
 import {appointTask} from "../../store/company/tasks/tasksAction";
+import {useTranslation} from "react-i18next";
 
 export default function TaskRecommendationForm(props) {
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
 
@@ -73,18 +75,18 @@ export default function TaskRecommendationForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} color={"success"}>Appoint</Button>
+            <Button onClick={handleClickOpen} color={"success"}>{t('form.appoint')}</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task appoint form by recommendations</DialogTitle>
+                <DialogTitle>{t('TasksPage.appoint_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can appoint workers for this task
+                        {t('TasksPage.appoint_form_description')}
                     </DialogContentText>
                     {props.recommended_workers[0].id ? (
                         <>
                             <form onSubmit={handleSubmit} id="qualificationCreateForm">
                                 <FormControl fullWidth variant="standard" sx={{mt: 1}}>
-                                    <InputLabel id="demo-simple-select-label">Recommended workers</InputLabel>
+                                    <InputLabel id="demo-simple-select-label">{t('form.recommended_workers')}</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="task-recommended-workers"
@@ -108,29 +110,27 @@ export default function TaskRecommendationForm(props) {
                             <Paper elevation={3} sx={{mt: 3}}>
                                 <Box p={1}>
                                     <Typography>
-                                        First
-                                        name: {selectedFirstName}
+                                        {t('form.first_name')}: {selectedFirstName}
                                     </Typography>
                                     <Divider/>
                                     <Typography>
-                                        Last
-                                        name: {selectedLastName}
+                                        {t('form.last_name')}: {selectedLastName}
                                     </Typography>
                                     <Divider/>
                                     <Tooltip
-                                        title="The greater value the better and faster worker can handle tasks(basic 1)"
+                                        title={t('TasksPage.productivity_explanation')}
                                         followCursor>
                                         <Typography>
-                                            Productivity: {selectedProductivity}
+                                            {t('form.productivity')}: {selectedProductivity}
                                         </Typography>
                                     </Tooltip>
                                     <Divider/>
                                     <Typography>
-                                        Working hours: {selectedWorkingHours}
+                                        {t('form.working_hours')}: {selectedWorkingHours}
                                     </Typography>
                                     <Divider/>
                                     <Typography>
-                                        Approximate finish date: {selectedFinishDate}
+                                        {t('TasksPage.approximate_finish_date')}: {selectedFinishDate}
                                     </Typography>
                                 </Box>
                             </Paper>
@@ -143,17 +143,19 @@ export default function TaskRecommendationForm(props) {
                     {props.recommended_workers[0].id ?
                         <DateTimePicker sx={{mt:3, display:"flex"}}
                                         id="deadline"
+                                        label={t('form.deadline')}
                                         defaultValue={deadline}
                                         onChange={(e)=> {setDeadline(e)}}
                                         format="LLL"
+                                        disablePast
                         /> : null
                     }
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
                     {props.recommended_workers[0].id ?
-                        <Button type="submit" form="qualificationCreateForm">Appoint</Button> : null}
+                        <Button type="submit" form="qualificationCreateForm">{t('form.appoint')}</Button> : null}
                 </DialogActions>
             </Dialog>
         </div>

@@ -18,23 +18,25 @@ import {
     TableRowDetail,
 } from '@devexpress/dx-react-grid-material-ui';
 import {CircularProgress} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 const URL = 'http://127.0.0.1:8000/api/company/logs/';
 
 const RowDetail = ({ row }) => (
     <div>
-        Description:
+        {'Description:'}
         {' '}
         {row.description}
     </div>
 );
 
 export default function WorkersLogsPage() {
+    const { t } = useTranslation();
     const [columns] = useState([
-        { name: 'username', title: 'Worker' },
-        { name: 'title', title: 'Task' },
-        { name: 'type', title: 'Log type' },
-        { name: 'localized_datetime', title: 'Datetime' },
+        { name: 'username', title: t('form.worker') },
+        { name: 'title', title: t('form.task') },
+        { name: 'type', title: t('form.log_type') },
+        { name: 'localized_datetime', title: t('form.date_created') },
     ]);
     const [rows, setRows] = useState([]);
     const [totalCount, setTotalCount] = useState(0);

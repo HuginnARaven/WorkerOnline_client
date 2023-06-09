@@ -11,6 +11,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {editQualification} from "../../store/company/qualifications/qualificationsAction";
+import {useTranslation} from "react-i18next";
 
 export default function QualificationUpdateForm(props) {
     const [open, setOpen] = React.useState(false);
@@ -18,6 +19,8 @@ export default function QualificationUpdateForm(props) {
     const [name, setName] = React.useState(props.name);
     const [modifier, setModifier] = React.useState(props.modifier);
     const [errors, setErrors] = useState({});
+
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,12 +59,12 @@ export default function QualificationUpdateForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Update</Button>
+            <Button onClick={handleClickOpen}>{t('form.update')}</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Qualification create form</DialogTitle>
+                <DialogTitle>{t('QualificationPage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new qualifications for your workers
+                        {t('QualificationPage.edit_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="qualificationUpdateForm">
                         <TextField
@@ -70,7 +73,7 @@ export default function QualificationUpdateForm(props) {
                             helperText={errors.name}
                             margin="dense"
                             id="qualification-name"
-                            label="Name"
+                            label={t('form.name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -83,7 +86,7 @@ export default function QualificationUpdateForm(props) {
                                 helperText={errors.modifier}
                                 margin="dense"
                                 id="qualification-modifier"
-                                label="Modifier"
+                                label={t('form.modifier')}
                                 type="number"
                                 fullWidth
                                 variant="standard"
@@ -97,8 +100,8 @@ export default function QualificationUpdateForm(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="qualificationUpdateForm">Update</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="qualificationUpdateForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

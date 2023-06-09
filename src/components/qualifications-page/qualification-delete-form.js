@@ -10,12 +10,15 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {deleteQualification} from "../../store/company/qualifications/qualificationsAction";
+import {useTranslation} from "react-i18next";
 
 export default function QualificationDeleteForm(props) {
     const [open, setOpen] = React.useState(false);
 
     const [name, setName] = React.useState(null);
     const [errors, setErrors] = useState({});
+
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -55,14 +58,14 @@ export default function QualificationDeleteForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} color={"error"}>Delete</Button>
+            <Button onClick={handleClickOpen} color={"error"}>{t('form.delete')}</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Qualification delete form</DialogTitle>
+                <DialogTitle>{t('QualificationPage.delete_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        This action will delete all workers and tasks with this qualification!
+                        {t('QualificationPage.delete_form_description_1')}
                         <p>
-                            Input qualification name to continue:
+                            {t('QualificationPage.delete_form_description_2')}
                         </p>
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="qualificationUpdateForm">
@@ -72,7 +75,7 @@ export default function QualificationDeleteForm(props) {
                             helperText={errors.name}
                             margin="dense"
                             id="qualification-name"
-                            label="Name"
+                            label={t('form.name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -82,8 +85,8 @@ export default function QualificationDeleteForm(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="qualificationUpdateForm" color={"error"}>Delete</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="qualificationUpdateForm" color={"error"}>{t('form.delete')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -15,8 +15,11 @@ import {timezones_list} from "../../utils/timezones_list";
 import {changePassword, editUser} from "../../store/user/userAction";
 import Typography from "@mui/material/Typography";
 import PasswordIcon from "@mui/icons-material/Password";
+import {useTranslation} from "react-i18next";
 
 export default function PasswordChangeForm() {
+    const { t } = useTranslation();
+
     const [open, setOpen] = React.useState(false);
     const [old_password, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
@@ -61,15 +64,15 @@ export default function PasswordChangeForm() {
         <div>
             <Stack direction={"row"} alignItems="center">
                 <Typography variant="body1" textAlign={"left"}>
-                    Password:
+                    {t('form.password')}:
                 </Typography>
-                <Button variant="contained" sx={{ml:2, mr:2}} onClick={handleClickOpen} fullWidth><PasswordIcon/>Change<PasswordIcon/></Button>
+                <Button variant="contained" sx={{ml:2, mr:2}} onClick={handleClickOpen} fullWidth><PasswordIcon/>{t('ProfilePage.change')}<PasswordIcon/></Button>
             </Stack>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Signup form</DialogTitle>
+                <DialogTitle>{t('ProfilePage.password_change_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Register to use website!
+                        {t('ProfilePage.password_change_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="passwordChangeForm">
                         <TextField
@@ -78,7 +81,7 @@ export default function PasswordChangeForm() {
                             helperText={errors.old_password}
                             margin="dense"
                             id="old_password"
-                            label="Old password"
+                            label={t('form.password_old')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -89,7 +92,7 @@ export default function PasswordChangeForm() {
                             helperText={errors.password}
                             margin="dense"
                             id="email"
-                            label="New password"
+                            label={t('form.password_new')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -100,7 +103,7 @@ export default function PasswordChangeForm() {
                             helperText={errors.password2}
                             margin="dense"
                             id="name"
-                            label="Repeat new password"
+                            label={t('form.password2_new')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -109,8 +112,8 @@ export default function PasswordChangeForm() {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="passwordChangeForm">Save</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="passwordChangeForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

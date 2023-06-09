@@ -17,6 +17,7 @@ import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultR
 import TaskDetailedForm from "./task-detailed-form";
 import WorkerDetailedForm from "./worker-detailed-form";
 import AppointmentCommentForm from "./appointment-comment-form";
+import {useTranslation} from "react-i18next";
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -32,6 +33,8 @@ const ExpandMore = styled((props) => {
 export default function TaskAppointmentItem(props) {
     const [expanded, setExpanded] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { t } = useTranslation();
+
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -53,22 +56,22 @@ export default function TaskAppointmentItem(props) {
             />
             <CardContent>
                 <Typography variant="body2" textAlign={"left"}>
-                    Worker: {appointment_data.worker_info.first_name} {appointment_data.worker_info.last_name}
+                    {t('form.worker')}: {appointment_data.worker_info.first_name} {appointment_data.worker_info.last_name}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    Is done: {appointment_data.is_done ? (
-                        <>Yes<CheckBoxIcon fontSize={"small"} sx={{color: green[500]}}/></>) :
-                    (<>No<DisabledByDefaultRoundedIcon fontSize={"small"} sx={{color: red[500]}}/></>)
+                    {t('form.is_done')}: {appointment_data.is_done ? (
+                        <>{t('form.yes')}<CheckBoxIcon fontSize={"small"} sx={{color: green[500]}}/></>) :
+                    (<>{t('form.no')}<DisabledByDefaultRoundedIcon fontSize={"small"} sx={{color: red[500]}}/></>)
                 }
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    Status: {appointment_data.status}
+                    {t('form.status')}: {appointment_data.status}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <DateTimeField
-                    label="Time appointed"
+                    label={t('form.time_start')}
                     value={dayjs(appointment_data.time_start)}
                     format="LLL"
                     size={"small"}
@@ -77,13 +80,12 @@ export default function TaskAppointmentItem(props) {
                     <>
                         <Divider sx={{mt: 2, mb: 2}}/>
                         <DateTimeField
-                            label="Time done"
+                            label={t('form.time_end')}
                             value={dayjs(appointment_data.time_end)}
                             format="LLL"
                             size={"small"}
                         />
                     </>
-
                 ) : (<Divider sx={{mt: 2, mb: 2}}/>)
                 }
 

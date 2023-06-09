@@ -8,10 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import {useTranslation} from "react-i18next";
 
 
 export default function TaskDetailedForm(props) {
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,30 +26,30 @@ export default function TaskDetailedForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} variant="outlined" sx={{mb:2, width: "90%"}}>Get more task info</Button>
+            <Button onClick={handleClickOpen} variant="outlined" sx={{mb:2, width: "90%"}}>{t('AppointmentsPage.task_info_get')}</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task detailed info</DialogTitle>
+                <DialogTitle textAlign={"center"}>{t('AppointmentsPage.task_info_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography variant="body1" textAlign={"left"}>
-                            Title: {props.title}
+                            {t('form.title')}: {props.title}
                         </Typography>
                         <Divider sx={{mt: 2, mb: 2}}/>
                         <Typography variant="body1" textAlign={"left"}>
-                            Description: {props.description}
+                            {t('form.description')}: {props.description}
                         </Typography>
                         <Divider sx={{mt: 2, mb: 2}}/>
                         <Typography variant="body1" textAlign={"left"}>
-                            Estimate hours: {props.estimate_hours}
+                            {t('form.estimate_hours')}: {props.estimate_hours}
                         </Typography>
                         <Divider sx={{mt: 2, mb: 2}}/>
                         <Typography variant="body1" textAlign={"left"}>
-                            Needed qualification: {props.task_difficulty_info.name}
+                            {t('form.needed_qualification')}: {props.task_difficulty_info.name}
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleClose}>{t('form.close')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

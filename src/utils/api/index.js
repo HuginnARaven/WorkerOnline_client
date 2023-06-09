@@ -364,6 +364,42 @@ export let companyAPI = {
             },
         }).then(res => res.data);
     },
+
+    getOrders(token) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.get(`iot/company-offer/`, {
+            headers: {
+                Authorization: "Bearer " + token || userToken
+            },
+        }).then(res => res.data);
+    },
+
+    createOrder(data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.post(`iot/company-offer/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    editOrder(orderId, data) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.patch(`iot/company-offer/${orderId}/`, data,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
+
+    deleteOrder(orderId) {
+        const userToken = localStorage.getItem('access_token')
+        return baseApi2.delete(`iot/company-offer/${orderId}/`,{
+            headers: {
+                Authorization: "Bearer " + userToken
+            }
+        }).then(res => res.data);
+    },
 }
 
 export let workerAPI = {

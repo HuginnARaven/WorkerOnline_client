@@ -32,7 +32,7 @@ import MemoryIcon from '@mui/icons-material/Memory';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import TranslateIcon from '@mui/icons-material/Translate';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
@@ -44,6 +44,7 @@ import LoginFormDialog from "../auth/login-form";
 import RegisterFormDialog from "../auth/register-form";
 import {ColorModeContext} from "../../App";
 import LanguageSelect from "./language-select";
+import {useTranslation} from "react-i18next";
 
 const drawerWidth = 240;
 
@@ -112,11 +113,12 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
     }),
 );
 
-const pages = ['Products', 'Pricing', 'Devblog']
 
 export default function Layout() {
     const theme = useTheme();
     const colorMode = React.useContext(ColorModeContext);
+
+    const { t } = useTranslation();
 
     const [open, setOpen] = React.useState(false);
     const isLogin = useSelector(state => state.user.is_authorized);
@@ -124,50 +126,28 @@ export default function Layout() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+    const pages = [
+        {text: t('navigation.products'), href:"products"},
+        {text: t('navigation.pricing'), href:"pricing"},
+        {text: t('navigation.devblog'), href:"devblog"}
+    ]
+
+
     const dashboardPages = [
-        {
-            text: "Qualifications",
-            href: "qualifications",
-            icon: <ElevatorIcon color={useLocation().pathname === "/qualifications" ? "primary" : "action"}/>
-        },
-        {
-            text: "Workers",
-            href: "workers",
-            icon: <AccessibilityNewIcon color={useLocation().pathname === "/workers" ? "primary" : "action"}/>
-        },
-        {
-            text: "Tasks",
-            href: "tasks",
-            icon: <AddchartIcon color={useLocation().pathname === "/tasks" ? "primary" : "action"}/>
-        },
-        {
-            text: "Tasks appointments",
-            href: "tasks-appointments",
-            icon: <ReceiptLongIcon color={useLocation().pathname === "/tasks-appointments" ? "primary" : "action"}/>
-        },
-        {
-            text: "Workers logs",
-            href: "workers-logs",
-            icon: <MenuBookIcon color={useLocation().pathname === "/workers-logs" ? "primary" : "action"}/>
-        },
-        {
-            text: "Supervisors",
-            href: "iot",
-            icon: <MemoryIcon color={useLocation().pathname === "/iot" ? "primary" : "action"}/>
-        },
-        {
-            text: "Voting",
-            href: "voting",
-            icon: <ThumbsUpDownOutlinedIcon color={useLocation().pathname === "/voting" ? "primary" : "action"}/>
-        },
-        {
-            text: "Auto appointment",
-            href: "auto-appointment",
-            icon: <IntegrationInstructionsIcon
-                color={useLocation().pathname === "/auto-appointment" ? "primary" : "action"}/>
-        }
+        {text: t('navigation.qualifications'), href: "qualifications", icon: <ElevatorIcon color={useLocation().pathname === "/qualifications" ? "primary" : "action"}/>},
+        {text: t('navigation.workers'), href: "workers", icon: <AccessibilityNewIcon color={useLocation().pathname === "/workers" ? "primary" : "action"}/>},
+        {text: t('navigation.tasks'), href: "tasks", icon: <AddchartIcon color={useLocation().pathname === "/tasks" ? "primary" : "action"}/>},
+        {text: t('navigation.tasks_appointments'), href: "tasks-appointments", icon: <ReceiptLongIcon color={useLocation().pathname === "/tasks-appointments" ? "primary" : "action"}/>},
+        {text: t('navigation.workers_logs'), href: "workers-logs", icon: <MenuBookIcon color={useLocation().pathname === "/workers-logs" ? "primary" : "action"}/>},
+        {text: t('navigation.iot'), href: "iot", icon: <MemoryIcon color={useLocation().pathname === "/iot" ? "primary" : "action"}/>},
+        {text: t('navigation.voting'), href: "voting", icon: <ThumbsUpDownOutlinedIcon color={useLocation().pathname === "/voting" ? "primary" : "action"}/>},
+        {text: t('navigation.auto_appointment'), href: "auto-appointment", icon: <IntegrationInstructionsIcon color={useLocation().pathname === "/auto-appointment" ? "primary" : "action"}/>}
     ];
 
+    const additionalPages = [
+        {text: t('navigation.tech_support'), href: "tech-support", icon: <HelpOutlineSharpIcon color={useLocation().pathname === "/tech-support" ? "primary" : "action"}/>},
+        {text: t('navigation.offers'), href: "offers", icon: <ShoppingBasketIcon color={useLocation().pathname === "/offers" ? "primary" : "action"}/>},
+    ];
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -274,8 +254,8 @@ export default function Layout() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.text} onClick={handleCloseNavMenu} component={Link} to={page.href}>
+                                    <Typography textAlign="center">{page.text}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -302,11 +282,12 @@ export default function Layout() {
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
+                                key={page.text}
                                 onClick={handleCloseNavMenu}
                                 sx={{my: 2, color: 'white', display: 'block'}}
+                                component={Link} to={page.href}
                             >
-                                {page}
+                                {page.text}
                             </Button>
                         ))}
                     </Box>
@@ -351,10 +332,10 @@ export default function Layout() {
                                 onClose={handleCloseUserMenu}
                             >
                                 <MenuItem component={Link} to={'profile'} key={'profile'}>
-                                    <Typography textAlign="center">Profile</Typography>
+                                    <Typography textAlign="center">{t('ProfilePage.profile')}</Typography>
                                 </MenuItem>
                                 <MenuItem key={'logout'} onClick={handleLogout}>
-                                    <Typography textAlign="center">Log out</Typography>
+                                    <Typography textAlign="center">{t('ProfilePage.logout')}</Typography>
                                 </MenuItem>
                             </Menu>
                         </Box>
@@ -397,28 +378,30 @@ export default function Layout() {
                     </List>
                     <Divider/>
                     <List>
-                        <ListItem key={"help"} disablePadding sx={{display: 'block'}}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                                component={Link}
-                                to={"tech-support"}
-                            >
-                                <ListItemIcon
+                        {additionalPages.map((page) => (
+                            <ListItem key={page.text} disablePadding sx={{display: 'block'}}>
+                                <ListItemButton
                                     sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
+                                        minHeight: 48,
+                                        ustifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
                                     }}
+                                    component={Link}
+                                    to={page.href}
                                 >
-                                    <HelpOutlineSharpIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary={"Help"} sx={{opacity: open ? 1 : 0}}/>
-                            </ListItemButton>
-                        </ListItem>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {page.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={page.text} sx={{opacity: open ? 1 : 0}}/>
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
                     </List>
                 </Drawer>) : null}
             <Box component="main" sx={{flexGrow: 1, p: 3}}>

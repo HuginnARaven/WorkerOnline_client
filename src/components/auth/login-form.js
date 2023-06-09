@@ -10,11 +10,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert, CircularProgress} from "@mui/material";
 import {login} from "../../store/auth/authAction";
 import { useState } from 'react';
-import {SetUser} from "../../store/user/userSlice";
 import {getUser} from "../../store/user/userAction";
+import {useTranslation} from "react-i18next";
 
 export default function LoginFormDialog() {
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,13 +57,13 @@ export default function LoginFormDialog() {
     return (
         <div>
             <Button sx={{my: 2, color: 'white', display: 'block'}} onClick={handleClickOpen}>
-                Login
+                {t('ProfilePage.login')}
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Login</DialogTitle>
+                <DialogTitle>{t('ProfilePage.login_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Login to use website!
+                        {t('ProfilePage.login_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="loginFrom">
                         <TextField
@@ -71,7 +72,7 @@ export default function LoginFormDialog() {
                             helperText={errors.username}
                             margin="dense"
                             id="username"
-                            label="Username"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -82,7 +83,7 @@ export default function LoginFormDialog() {
                             helperText={errors.password}
                             margin="dense"
                             id="password"
-                            label="Password"
+                            label={t('form.password')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -94,8 +95,8 @@ export default function LoginFormDialog() {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="loginFrom">{is_loading ? <CircularProgress />: 'Login'}</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="loginFrom">{is_loading ? <CircularProgress />: t('ProfilePage.login')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -6,9 +6,11 @@ import Paper from "@mui/material/Paper";
 import {useState} from "react";
 import {editIot} from "../../store/company/iot/iotAction";
 import {useDispatch} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 
 export default function IotItem(props) {
+    const { t } = useTranslation();
     const supervisor = props
     const [worker, setWorker] = React.useState(props.worker);
     const [errors, setErrors] = useState({});
@@ -45,22 +47,22 @@ export default function IotItem(props) {
                    mt={2}
                    mb={2}>
                 <Typography variant="subtitle1"># {supervisor.id}</Typography>
-                {supervisor.worker ? (<Typography variant="subtitle1">Worker: {supervisor.username}</Typography>) : null}
-                <Typography variant="subtitle1">Admin mode: {supervisor.in_admin_mode ? "Yes" : "No"}</Typography>
-                <Typography variant="subtitle1">Is active: {supervisor.is_active ? "Yes" : "No"}</Typography>
-                <Typography variant="subtitle1">Last active: {supervisor.localized_last_active}</Typography>
+                {supervisor.worker ? (<Typography variant="subtitle1">{t('form.worker')}: {supervisor.username}</Typography>) : null}
+                <Typography variant="subtitle1">{t('form.admin_mode')}: {supervisor.in_admin_mode ? t('form.yes') : t('form.no')}</Typography>
+                <Typography variant="subtitle1">{t('form.is_active')}: {supervisor.is_active ? t('form.yes')  : t('form.no')}</Typography>
+                <Typography variant="subtitle1">{t('form.last_active')}: {supervisor.localized_last_active}</Typography>
 
                 <form id={`iot-${supervisor.id}-workerChangeForm`} onSubmit={handleSubmit}>
                 <Stack direction="row">
 
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Worker</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('form.worker')}</InputLabel>
                             <Select
                                 error={errors.worker}
                                 labelId="demo-simple-select-label"
                                 id="workers"
                                 value={worker}
-                                label="Worker"
+                                label={t('form.worker')}
                                 onChange={(e) => {setWorker(e.target.value)}}
                             >
                                 {props.workers_list.map((worker) => (
@@ -69,7 +71,7 @@ export default function IotItem(props) {
                             </Select>
                             <FormHelperText>{errors.worker}</FormHelperText>
                         </FormControl>
-                        <Button type={"submit"} form={`iot-${supervisor.id}-workerChangeForm`} sx={{ml: 1}}>Appoint</Button>
+                        <Button fullWidth type={"submit"} form={`iot-${supervisor.id}-workerChangeForm`} sx={{ml: 1}}>{t('form.appoint')}</Button>
                 </Stack>
                 </form>
             </Stack>

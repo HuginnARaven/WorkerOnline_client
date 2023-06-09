@@ -15,8 +15,10 @@ import dayjs from "dayjs";
 import {TimePicker} from "@mui/x-date-pickers";
 import Stack from "@mui/material/Stack";
 import {createWorker} from "../../store/company/workers/workersAction";
+import {useTranslation} from "react-i18next";
 
 export default function WorkerCreateForm() {
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
     const [username, setUsername] = React.useState(null);
@@ -92,10 +94,10 @@ export default function WorkerCreateForm() {
                 <AddIcon />
             </Fab>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Worker create form</DialogTitle>
+                <DialogTitle>{t('WorkersPage.create_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new account for your workers
+                        {t('WorkersPage.create_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="workerCreateForm">
                         <TextField
@@ -104,7 +106,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.username}
                             margin="dense"
                             id="worker-username"
-                            label="Username"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -116,7 +118,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.email}
                             margin="dense"
                             id="worker-email"
-                            label="Email"
+                            label={t('form.email')}
                             type="email"
                             fullWidth
                             variant="standard"
@@ -128,7 +130,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.password}
                             margin="dense"
                             id="worker-password"
-                            label="Password"
+                            label={t('form.password')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -140,7 +142,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.password2}
                             margin="dense"
                             id="worker-password2"
-                            label="Repeat password"
+                            label={t('form.password2')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -152,7 +154,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.first_name}
                             margin="dense"
                             id="worker-first_name"
-                            label="First name"
+                            label={t('form.first_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -164,7 +166,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.last_name}
                             margin="dense"
                             id="worker-last_name"
-                            label="Last name"
+                            label={t('form.last_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -172,12 +174,12 @@ export default function WorkerCreateForm() {
                             onChange={(e)=> {setLastName(e.target.value)}}
                         />
                         <FormControl fullWidth  variant="standard">
-                            <InputLabel id="demo-simple-select-label">Qualification</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('form.qualification')}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="worker-qualifications"
                                 value={qualification}
-                                label="Qualification"
+                                label={t('form.qualification')}
                                 onChange={(e) => {setQualification(e.target.value)}}
                             >
                                 {qualifications_list.map((qualification_item) => (
@@ -190,7 +192,7 @@ export default function WorkerCreateForm() {
                                 sx={{display:"flex"}}
                                 key={"worker-day_start"}
                                 variant="standard"
-                                label="Day start"
+                                label={t('form.day_start')}
                                 value={day_start}
                                 onChange={(newValue) => setDayStart(newValue)}
                             />
@@ -198,7 +200,7 @@ export default function WorkerCreateForm() {
                                 sx={{display:"flex"}}
                                 key={"worker-day_end"}
                                 variant="standard"
-                                label="Day end"
+                                label={t('form.day_end')}
                                 value={day_end}
                                 onChange={(newValue) => setDayEnd(newValue)}
                             />
@@ -208,7 +210,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.working_hours}
                             margin="dense"
                             id="worker-working_hours"
-                            label="Working hours"
+                            label={t('form.working_hours')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -220,7 +222,7 @@ export default function WorkerCreateForm() {
                             helperText={errors.salary}
                             margin="dense"
                             id="worker-salary"
-                            label="Salary"
+                            label={t('form.salary')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -233,8 +235,8 @@ export default function WorkerCreateForm() {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="workerCreateForm">Create</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="workerCreateForm">{t('form.create')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

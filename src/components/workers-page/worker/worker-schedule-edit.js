@@ -13,8 +13,11 @@ import Alert from "@mui/material/Alert";
 import Checkbox from "@mui/material/Checkbox";
 import {green, red} from "@mui/material/colors";
 import {editWorkerSchedule} from "../../../store/company/workers/workersAction";
+import {useTranslation} from "react-i18next";
 
 export default function WorkerScheduleEdit(props) {
+    const { t } = useTranslation();
+
     const [open, setOpen] = React.useState(false);
 
     const schedule_data = props
@@ -73,18 +76,18 @@ export default function WorkerScheduleEdit(props) {
     };
 
     let day_of_week_elem = [
-        {day_value: monday, day_label: "Monday: ", day_method: setMonday},
-        {day_value: tuesday, day_label: "Tuesday: ", day_method: setTuesday},
-        {day_value: wednesday, day_label: "Wednesday: ", day_method: setWednesday},
-        {day_value: thursday, day_label: "Thursday: ", day_method: setThursday},
-        {day_value: friday, day_label: "Friday: ", day_method: setFriday},
-        {day_value: saturday, day_label: "Saturday: ", day_method: setSaturday},
-        {day_value: sunday, day_label: "Sunday: ", day_method: setSunday},
+        {day_value: monday, day_label: t('form.monday') + ": ", day_method: setMonday},
+        {day_value: tuesday, day_label: t('form.tuesday') + ": ", day_method: setTuesday},
+        {day_value: wednesday, day_label: t('form.wednesday') + ": ", day_method: setWednesday},
+        {day_value: thursday, day_label: t('form.thursday') + ": ", day_method: setThursday},
+        {day_value: friday, day_label: t('form.friday') + ": ", day_method: setFriday},
+        {day_value: saturday, day_label: t('form.saturday') + ": ", day_method: setSaturday},
+        {day_value: sunday, day_label: t('form.sunday') + ": ", day_method: setSunday},
     ]
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Update</Button>
+            <Button onClick={handleClickOpen}>{t('form.update')}</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Schedule edit form</DialogTitle>
                 <DialogContent>

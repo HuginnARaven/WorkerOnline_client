@@ -13,8 +13,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
-import WorkerMenu from "./tech-support-message-menu";
 import {useTranslation} from "react-i18next";
+import OrderItemMenu from "./order-item-menu";
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -27,7 +27,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export default function TechSupportMessage(props) {
+export default function OrderItem(props) {
     const { t } = useTranslation();
     const [expanded, setExpanded] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -43,21 +43,21 @@ export default function TechSupportMessage(props) {
         setExpanded(!expanded);
     };
 
-    let message_data = props
+    let order_data = props
 
     return (
         <Card sx={{maxWidth: 500}}>
             <CardHeader
-                action={ <WorkerMenu {...props}/>}
-                title={`${message_data.title}`}
+                action={ <OrderItemMenu {...props}/>}
+                title={`${t('form.order')} #${order_data.id}`}
             />
             <CardContent>
                 <Typography variant="body2" textAlign={"left"}>
-                    {t('form.status')}: {message_data.status}
+                    {t('form.status')}: {order_data.status}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    {t('form.admin_response')}: {message_data.admin_response ? message_data.admin_response : t('form.no_response')}
+                    {t('form.admin_response')}: {order_data.comment ? order_data.comment : t('form.no_response')}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -76,15 +76,15 @@ export default function TechSupportMessage(props) {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography variant="body2" textAlign={"left"}>
-                        {t('form.title')}: {message_data.title}
+                        {t('form.address')}: {order_data.address_of_delivery}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        {t('form.description')}: {message_data.description}
+                        {t('form.date_created')}: {order_data.localized_created_at}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        {t('form.date_created')}: {message_data.localized_created_at}
+                        {t('form.last_changed')}: {order_data.localized_last_changed}
                     </Typography>
                 </CardContent>
             </Collapse>

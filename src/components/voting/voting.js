@@ -19,6 +19,7 @@ import {green, red} from "@mui/material/colors";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import VotingMenu from "./voting-menu";
+import {useTranslation} from "react-i18next";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -32,6 +33,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function Voting(props) {
+    const { t } = useTranslation();
     const [expanded, setExpanded] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -58,18 +60,18 @@ export default function Voting(props) {
             />
             <CardContent>
                 <Typography variant="body2" textAlign={"left"}>
-                    Description: {vote_data.description}
+                    {t('form.description')}: {vote_data.description}
                 </Typography>
                 <Divider sx={{mt:2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    Is active: {vote_data.is_active ? (
-                        <>Yes<CheckBoxIcon fontSize={"small"} sx={{ color: green[500]}}/></>) :
-                        (<>No<DisabledByDefaultRoundedIcon  fontSize={"small"} sx={{ color: red[500]}}/></>)
+                    {t('form.is_active')}: {vote_data.is_active ? (
+                        <>{t('form.yes')}<CheckBoxIcon fontSize={"small"} sx={{ color: green[500]}}/></>) :
+                        (<>{t('form.no')}<DisabledByDefaultRoundedIcon  fontSize={"small"} sx={{ color: red[500]}}/></>)
                 }
                 </Typography>
                 <Divider sx={{mt:2, mb: 2}}/>
                 <DateTimeField
-                    label="Deadline"
+                    label={t('form.deadline')}
                     value={dayjs(vote_data.deadline)}
                     format="LLL"
                     size={"small"}

@@ -13,8 +13,11 @@ import { useState } from 'react';
 import EditIcon from "@mui/icons-material/Edit";
 import {timezones_list} from "../../utils/timezones_list";
 import {editUser} from "../../store/user/userAction";
+import {useTranslation} from "react-i18next";
 
 export default function ProfileEditForm(props) {
+    const { t } = useTranslation();
+
     const [open, setOpen] = React.useState(false);
     const [username, setUsername] = useState(props.username);
     const [email, setEmail] = useState(props.email);
@@ -65,13 +68,13 @@ export default function ProfileEditForm(props) {
     return (
         <div>
             <Stack direction={"row"} alignItems="center">
-                <Button variant="contained" sx={{ml:2, mr:2}} onClick={handleClickOpen} fullWidth>Edit profile <EditIcon/></Button>
+                <Button variant="contained" sx={{ml:2, mr:2}} onClick={handleClickOpen} fullWidth>{t('ProfilePage.edit_form_button')} <EditIcon/></Button>
             </Stack>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Signup form</DialogTitle>
+                <DialogTitle>{t('ProfilePage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Register to use website!
+                        {t('ProfilePage.edit_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="profileEditForm">
                         <TextField
@@ -80,7 +83,7 @@ export default function ProfileEditForm(props) {
                             helperText={errors.username}
                             margin="dense"
                             id="username"
-                            label="Username"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -91,7 +94,7 @@ export default function ProfileEditForm(props) {
                             helperText={errors.email}
                             margin="dense"
                             id="email"
-                            label="Email"
+                            label={t('form.email')}
                             type="email"
                             fullWidth
                             variant="standard"
@@ -102,7 +105,7 @@ export default function ProfileEditForm(props) {
                             helperText={errors.name}
                             margin="dense"
                             id="name"
-                            label="Company name"
+                            label={t('ProfilePage.company_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -113,7 +116,7 @@ export default function ProfileEditForm(props) {
                             helperText={errors.description}
                             margin="dense"
                             id="name"
-                            label="Description"
+                            label={t('form.description')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -121,12 +124,12 @@ export default function ProfileEditForm(props) {
                             value={description} onChange={(e) => setDescription(e.target.value)}
                         />
                         <FormControl fullWidth  variant="standard">
-                            <InputLabel id="demo-simple-select-label">Timezone</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('ProfilePage.timezone')}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="task-difficulties"
                                 value={timezone}
-                                label="Timezone"
+                                label={t('ProfilePage.timezone')}
                                 onChange={(e) => {setTimezone(e.target.value)}}
                             >
                                 {timezones_list.map((timezones_item) => (
@@ -137,8 +140,8 @@ export default function ProfileEditForm(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="profileEditForm">Save</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="profileEditForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

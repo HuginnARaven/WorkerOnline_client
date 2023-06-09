@@ -16,9 +16,11 @@ import {login} from "../../store/auth/authAction";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
+import {useTranslation} from "react-i18next";
 
 export default function CreateVotingForm() {
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const [title, setTitle] = React.useState(null);
     const [description, setDescription] = React.useState(null);
@@ -75,10 +77,10 @@ export default function CreateVotingForm() {
                 <AddIcon />
             </Fab>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Voting create form</DialogTitle>
+                <DialogTitle>{t('VotingPage.create_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new voting for your workers
+                        {t('VotingPage.create_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="createVotingForm">
                     <TextField
@@ -87,7 +89,7 @@ export default function CreateVotingForm() {
                         helperText={errors.title}
                         margin="dense"
                         id="title"
-                        label="Voting title"
+                        label={t('VotingPage.voting_title')}
                         type="text"
                         fullWidth
                         variant="standard"
@@ -100,7 +102,7 @@ export default function CreateVotingForm() {
                         helperText={errors.description}
                         margin="dense"
                         id="description"
-                        label="Voting description"
+                        label={t('VotingPage.voting_description')}
                         type="text"
                         fullWidth
                         variant="standard"
@@ -111,14 +113,15 @@ export default function CreateVotingForm() {
                         {errors.voting_tasks ?( <Alert sx={{mt:1}} severity="error">{errors.voting_tasks}</Alert>) : null}
 
                     <DateTimePicker sx={{mt:3, display:"flex"}}
+                                    disablePast
                                     id="deadline"
                                     defaultValue={deadline}
                                     onChange={(e)=> {setDeadline(e)}}/>
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="createVotingForm">Create</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="createVotingForm">{t('form.create')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

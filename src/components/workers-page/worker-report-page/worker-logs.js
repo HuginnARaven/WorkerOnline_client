@@ -18,6 +18,7 @@ import {
     TableRowDetail,
 } from '@devexpress/dx-react-grid-material-ui';
 import {CircularProgress} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 const URL = 'http://127.0.0.1:8000/api/company/logs/';
 
@@ -30,10 +31,11 @@ const RowDetail = ({ row }) => (
 );
 
 export default function WorkerLogs(props) {
+    const { t } = useTranslation();
     const [columns] = useState([
-        { name: 'title', title: 'Task' },
-        { name: 'type', title: 'Log type' },
-        { name: 'localized_datetime', title: 'Datetime' },
+        { name: 'title', title: t('form.task') },
+        { name: 'type', title: t('form.log_type') },
+        { name: 'localized_datetime', title: t('form.date_created') },
     ]);
 
     const [rows, setRows] = useState([]);

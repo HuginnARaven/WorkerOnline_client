@@ -13,19 +13,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
-import {deleteTechSupportMessage, editTechSupportMessage} from "../../store/user/techSupport/techSupportAction";
 import {useTranslation} from "react-i18next";
+import {deleteOrder, editOrder} from "../../store/company/orders/ordersAction";
 
-export default function WorkerMenu(props) {
+export default function OrderItemMenu(props) {
     const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openEditForm, setOpenEditForm] = React.useState(false);
     const [openDeleteForm, setOpenDeleteForm] = React.useState(false);
 
-    const message_data = props
-    const [delTitle, setDelTitle] = React.useState("");
-    const [title, setTitle] = React.useState(message_data.title);
-    const [description, setDescription] = React.useState(message_data.description);
+    const order_data = props
+    const [delAddress, setDelAddress] = React.useState("");
+    const [address, setAddress] = React.useState(props.address_of_delivery);
     const [errors, setErrors] = useState({});
 
     const open = Boolean(anchorEl);
@@ -40,8 +39,7 @@ export default function WorkerMenu(props) {
 
     const handleCloseEditForm = () => {
         setAnchorEl(null);
-        setTitle(message_data.title);
-        setDescription(message_data.description)
+        setAddress(order_data.address);
         setOpenEditForm(false);
     };
 
@@ -53,7 +51,7 @@ export default function WorkerMenu(props) {
     const handleCloseDeleteForm = () => {
         setAnchorEl(null);
         setOpenDeleteForm(false);
-        setDelTitle("")
+        setDelAddress("")
         setErrors({});
     };
 
@@ -70,18 +68,17 @@ export default function WorkerMenu(props) {
         setAnchorEl(null);
     };
 
-    let messageData = {
-        id: message_data.id,
-        title: title,
-        description: description,
+    let orderData = {
+        id: order_data.id,
+        address_of_delivery: address,
     }
 
     const dispatch = useDispatch();
 
     const handleSubmitEdit = (e) => {
         e.preventDefault();
-        console.log(messageData)
-        const res = dispatch(editTechSupportMessage(messageData))
+        console.log(orderData)
+        const res = dispatch(editOrder(orderData))
         res.then((value) => {
             console.log(value)
             if (value.error){
@@ -96,10 +93,10 @@ export default function WorkerMenu(props) {
 
     const handleSubmitDelete = (e) => {
         e.preventDefault();
-        if (props.title !== delTitle) {
-            setErrors({delUsername: "Incorrect title!"})
+        if (props.address_of_delivery !== delAddress) {
+            setErrors({delAddress: "Incorrect address!"})
         }else {
-            const res = dispatch(deleteTechSupportMessage(messageData.id))
+            const res = dispatch(deleteOrder(orderData.id))
             res.then((value) => {
                 console.log(value)
                 if (value.error){
@@ -135,46 +132,30 @@ export default function WorkerMenu(props) {
                 <MenuItem onClick={handleDeleteClick}>{t('form.delete')}</MenuItem>
             </Menu>
             <Dialog open={openEditForm} onClose={handleClose}>
-                <DialogTitle>{t('TechSupportPage.edit_form_title')}</DialogTitle>
+                <DialogTitle>{t('OrdersPage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {t('TechSupportPage.edit_form_description')}
+                        {t('OrdersPage.edit_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmitEdit} id="messageEditForm">
                         <TextField
                             autoFocus
-                            error={errors.title}
-                            helperText={errors.title}
+                            error={errors.address_of_delivery}
+                            helperText={errors.address_of_delivery}
                             margin="dense"
-                            id="task-title"
-                            label={t('form.title')}
+                            id="order-address"
+                            label={t('form.address')}
                             type="text"
                             fullWidth
                             variant="standard"
-                            value={title}
+                            value={address}
                             onChange={(e) => {
-                                setTitle(e.target.value)
-                            }}
-                        />
-
-                        <TextField
-                            error={errors.description}
-                            helperText={errors.description}
-                            margin="dense"
-                            id="task-description"
-                            label={t('form.description')}
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            multiline
-                            value={description}
-                            onChange={(e) => {
-                                setDescription(e.target.value)
+                                setAddress(e.target.value)
                             }}
                         />
 
                         {Object.entries(errors).map((error) => (
-                            error[0] !== "title" && error[0] !== "description" ? (
+                            error[0] !== "address_of_delivery" ? (
                                 <Alert severity="error" sx={{mt: 1}}>{error[1]}</Alert>) : null
                         ))}
                     </form>
@@ -191,32 +172,35 @@ export default function WorkerMenu(props) {
                 aria-describedby="alert-message-delete-description"
             >
                 <DialogTitle id="alert-worker-delete-title">
-                    {title}
+                    {`${t('form.order')} #${order_data.id}`}
                 </DialogTitle>
                 <DialogContent>
-                    <form onSubmit={handleSubmitDelete} id={`deleteMessageForm-${messageData.id}`}>
+                    <form onSubmit={handleSubmitDelete} id={`deleteMessageForm-${orderData.id}`}>
                         <DialogContentText id="alert-worker-delete-description">
-                            {t('TechSupportPage.delete_form_description_1')}
-                            <p>{t('TechSupportPage.delete_form_description_2')}</p>
+                            {t('OrdersPage.delete_form_description_1')}
+                            <p>{t('OrdersPage.delete_form_description_2')}</p>
                         </DialogContentText>
                         <TextField
                             autoFocus
-                            error={errors.delTitle}
-                            helperText={errors.delTitle}
+                            error={errors.delAddress}
+                            helperText={errors.delAddress}
                             margin="dense"
-                            id="message-title"
-                            label={t('form.name')}
+                            id="order-address"
+                            label={t('form.address')}
                             type="text"
                             fullWidth
                             variant="standard"
-                            value={delTitle}
-                            onChange={(e)=> {setDelTitle(e.target.value)}}
+                            value={delAddress}
+                            onChange={(e)=> {setDelAddress(e.target.value)}}
                         />
                     </form>
+                    {Object.entries(errors).map((error) => (
+                            <Alert severity="error" sx={{mt: 1}}>{error[1]}</Alert>
+                    ))}
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleCloseDeleteForm}>{t('form.cancel')}</Button>
-                    <Button color={"error"} type="submit" form={`deleteMessageForm-${messageData.id}`}>
+                    <Button color={"error"} type="submit" form={`deleteMessageForm-${orderData.id}`}>
                         {t('form.delete')}
                     </Button>
                 </DialogActions>

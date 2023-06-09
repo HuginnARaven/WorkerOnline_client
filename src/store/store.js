@@ -12,6 +12,7 @@ import getLogsSliceReducer from "./company/getLogs/getLogsSlice";
 import iotSliceReducer from "./company/iot/iotSlice";
 import workerReportSliceReducer from "./company/workerReport/workerReportSlice";
 import techSupportSliceReducer from "./user/techSupport/techSupportSlice";
+import ordersSliceReducer from "./company/orders/ordersSlice";
 
 export default configureStore({
     reducer: {
@@ -27,6 +28,7 @@ export default configureStore({
         logs: getLogsSliceReducer,
         iot: iotSliceReducer,
         worker_report: workerReportSliceReducer,
-        tech_support: techSupportSliceReducer
+        tech_support: techSupportSliceReducer,
+        orders: ordersSliceReducer
     },
 })

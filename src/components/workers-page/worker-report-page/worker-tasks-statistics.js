@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {Box, Divider, Fab, FormControl, InputLabel, MenuItem, Paper, Select, Tooltip, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 
 export default function WorkerTasksStatistics(props) {
+    const { t } = useTranslation();
     const [selectedTask, setTask] = React.useState(props.worker_tasks_statistics.length ? props.worker_tasks_statistics[0].id : null);
     const [title, setTitle] = React.useState('');
     const [estimate_hours, setEstimateHours] = React.useState(0);
@@ -38,7 +40,7 @@ export default function WorkerTasksStatistics(props) {
                     {selectedTask ? (
                         <Paper sx={{p: 3}}>
                             <Typography variant="h5" mb={3} textAlign={"center"}>
-                                Worker statistics per task
+                                {t('WorkerReportPage.worker_tasks_stat_title')}
                             </Typography>
                                 <FormControl fullWidth variant="standard" sx={{mt: 1}}>
                                     <InputLabel id="demo-simple-select-label">Task</InputLabel>
@@ -46,7 +48,7 @@ export default function WorkerTasksStatistics(props) {
                                         labelId="demo-simple-select-label"
                                         id="task-recommended-workers"
                                         value={selectedTask}
-                                        label="Task"
+                                        label={t('form.task')}
                                         onChange={(e) => {
                                             handleSelectTask(e.target.value)
                                         }}
@@ -60,43 +62,43 @@ export default function WorkerTasksStatistics(props) {
                             <Paper elevation={3} sx={{mt: 3}}>
                                 <Box p={1}>
                                     <Typography  variant="body1" textAlign={"left"}>
-                                        Title: {title}
+                                        {t('form.title')}: {title}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography  variant="body1" textAlign={"left"}>
-                                        Estimate hours: {estimate_hours}
+                                        {t('form.estimate_hours')}: {estimate_hours}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography  variant="body1" textAlign={"left"}>
-                                        Times out of working place: {times_out_of_working_place}
+                                        {t('WorkerReportPage.times_out_of_working_place')}: {times_out_of_working_place}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Tooltip
-                                        title="The greater value the faster worker handled tasks(basic 1)"
+                                        title={t('WorkerReportPage.task_performance_explanation')}
                                         followCursor>
                                         <Typography  variant="body1" textAlign={"left"}>
-                                            Performance: {task_performance}
+                                            {t('WorkerReportPage.performance')}: {task_performance}
                                         </Typography>
                                     </Tooltip>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography  variant="body1" textAlign={"left"}>
-                                        Is deadline met: {is_deadline_met ? "Yes" : "No"}
+                                        {t('WorkerReportPage.is_deadline_met')}: {is_deadline_met ? t('form.yes'): t('form.no')}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography  variant="body1" textAlign={"left"}>
-                                        Spent working hours: {spent_working_hours}
+                                        {t('WorkerReportPage.spent_working_hours')}: {spent_working_hours}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography variant="body1" textAlign={"left"}>
-                                        Time start: {time_start}
+                                        {t('form.time_start')}: {time_start}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography variant="body1" textAlign={"left"}>
-                                        Time end: {time_end}
+                                        {t('form.time_end')}: {time_end}
                                     </Typography>
                                     <Divider sx={{mt: 1, mb: 1}}/>
                                     <Typography variant="body1" textAlign={"left"}>
-                                        Deadline: {deadline}
+                                        {t('form.deadline')}: {deadline}
                                     </Typography>
                                 </Box>
                             </Paper>

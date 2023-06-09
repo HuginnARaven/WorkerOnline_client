@@ -9,11 +9,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {deleteTask} from "../../store/company/tasks/tasksAction";
+import {useTranslation} from "react-i18next";
 
 
 export default function TaskDeleteForm(props) {
     const [open, setOpen] = React.useState(false);
-
+    const { t } = useTranslation();
     const [title, setTitle] = React.useState('');
     const [errors, setErrors] = useState({});
 
@@ -55,14 +56,14 @@ export default function TaskDeleteForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} color={"error"}>Delete</Button>
+            <Button onClick={handleClickOpen} color={"error"}>{t('form.delete')}</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task delete form</DialogTitle>
+                <DialogTitle>{t('TasksPage.delete_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        This action will delete all statistics and logs for this task!
+                        {t('TasksPage.delete_form_description_1')}
                         <p>
-                            Input task title to continue:
+                            {t('TasksPage.delete_form_description_2')}
                         </p>
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="taskDeleteForm">
@@ -72,7 +73,7 @@ export default function TaskDeleteForm(props) {
                             helperText={errors.title}
                             margin="dense"
                             id="task-title"
-                            label="Title"
+                            label={t('form.title')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -82,8 +83,8 @@ export default function TaskDeleteForm(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="taskDeleteForm" color={"error"}>Delete</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="taskDeleteForm" color={"error"}>{t('form.delete')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

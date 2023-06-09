@@ -15,6 +15,7 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import WorkerMenu from "./worker-menu";
 import WorkerScheduleEdit from "./worker-schedule-edit";
+import {useTranslation} from "react-i18next";
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -28,6 +29,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function WorkerItem(props) {
+    const { t } = useTranslation();
     const [expanded, setExpanded] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -44,6 +46,8 @@ export default function WorkerItem(props) {
 
     let worker_data = props
 
+    let day_of_week_elem = [t('form.monday') + ": ", ]
+
     return (
         <Card sx={{maxWidth: 500}}>
             <CardHeader
@@ -54,25 +58,25 @@ export default function WorkerItem(props) {
             />
             <CardContent>
                 <Typography variant="body2" textAlign={"left"}>
-                    Username: {worker_data.username}
+                    {t('form.username')}: {worker_data.username}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    Email: {worker_data.email}
+                    {t('form.email')}: {worker_data.email}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    First name: {worker_data.first_name}
+                    {t('form.first_name')}: {worker_data.first_name}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
                 <Typography variant="body2" textAlign={"left"}>
-                    Last name: {worker_data.last_name}
+                    {t('form.last_name')}: {worker_data.last_name}
                 </Typography>
                 <Divider sx={{mt: 2, mb: 2}}/>
             </CardContent>
             <CardActions disableSpacing>
                 <Typography variant="body2" textAlign={"left"}>
-                    Detail info:
+                    {t('form.detail')}:
                 </Typography>
                 <ExpandMore
                     expand={expanded}
@@ -86,23 +90,23 @@ export default function WorkerItem(props) {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography variant="body2" textAlign={"left"}>
-                        Qualification: {worker_data.worker_qualification_info.name}
+                        {t('form.qualification')}: {worker_data.worker_qualification_info.name}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        Working hours: {worker_data.working_hours}
+                        {t('form.working_hours')}: {worker_data.working_hours}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        Day start: {worker_data.day_start}
+                        {t('form.day_start')}: {worker_data.day_start}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        Day end: {worker_data.day_end}
+                        {t('form.day_end')}: {worker_data.day_end}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Typography variant="body2" textAlign={"left"}>
-                        Salary: {worker_data.salary}
+                        {t('form.salary')}: {worker_data.salary}
                     </Typography>
                     <Divider sx={{mt: 2, mb: 2}}/>
                     <Accordion>
@@ -111,7 +115,7 @@ export default function WorkerItem(props) {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography>Work days</Typography>
+                            <Typography>{t('form.work_days')}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <WorkerScheduleEdit {...worker_data.worker_schedule}/>
@@ -120,7 +124,7 @@ export default function WorkerItem(props) {
                                     (<Box sx={{mt: 3}} id={`schedule-${worker_data.worker_schedule.id}-${day[0]}`}>
                                         <Divider/>
                                         <Typography textAlign={"left"}>
-                                            {day[0]}: {day[1] ? "Yes" : "No"}
+                                            {t(`form.${day[0]}`)}: {day[1] ? t('form.yes') : t('form.no')}
                                         </Typography>
                                         <Divider/>
                                     </Box>) : null

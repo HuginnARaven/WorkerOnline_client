@@ -17,9 +17,11 @@ import {commentAppointment} from "../../store/company/tasksAppointments/tasksApp
 import {useState} from "react";
 import Alert from "@mui/material/Alert";
 import CommentItem from "./comment-item";
+import {useTranslation} from "react-i18next";
 
 export default function AppointmentCommentForm(props) {
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const [new_comment_text, setCommentText] = React.useState('');
     const [errors, setErrors] = useState({});
@@ -59,9 +61,9 @@ export default function AppointmentCommentForm(props) {
     return (
         <div>
             <Button onClick={handleClickOpen} variant="contained"
-                    sx={{mb: 2, width: "90%"}}>Comment <ChatIcon/></Button>
+                    sx={{mb: 2, width: "90%"}}>{t('form.comment')} <ChatIcon/></Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Comments</DialogTitle>
+                <DialogTitle>{t('AppointmentsPage.comments_title')}</DialogTitle>
                 <DialogContent>
                     <Paper sx={{maxHeight: 550, overflow: 'auto'}}>
                         {props.comments.map((comment) => (
@@ -86,7 +88,7 @@ export default function AppointmentCommentForm(props) {
                     ))}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleClose}>{t('form.close')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

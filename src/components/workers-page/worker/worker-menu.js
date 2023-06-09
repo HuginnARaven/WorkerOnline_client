@@ -21,8 +21,11 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import {deleteWorker, editWorker} from "../../../store/company/workers/workersAction";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 export default function WorkerMenu(props) {
+    const { t } = useTranslation();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openEditForm, setOpenEditForm] = React.useState(false);
     const [openDeleteForm, setOpenDeleteForm] = React.useState(false);
@@ -173,24 +176,24 @@ export default function WorkerMenu(props) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleGetReport}>Get report</MenuItem>
-                <MenuItem onClick={handleEditClick}>Edit</MenuItem>
-                <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+                <MenuItem onClick={handleGetReport}>{t('WorkersPage.get_report')}</MenuItem>
+                <MenuItem onClick={handleEditClick}>{t('form.update')}</MenuItem>
+                <MenuItem onClick={handleDeleteClick}>{t('form.delete')}</MenuItem>
             </Menu>
             <Dialog open={openEditForm} onClose={handleClose}>
-                <DialogTitle>Qualification create form</DialogTitle>
+                <DialogTitle>{t('WorkersPage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new qualifications for your workers
+                        {t('WorkersPage.edit_form_description')}
                     </DialogContentText>
-                    <form onSubmit={handleSubmitEdit} id="workerCreateForm">
+                    <form onSubmit={handleSubmitEdit} id="workerEditForm">
                         <TextField
                             autoFocus
                             error={errors.username}
                             helperText={errors.username}
                             margin="dense"
                             id="worker-username"
-                            label="Username"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -204,7 +207,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.email}
                             margin="dense"
                             id="worker-email"
-                            label="Email"
+                            label={t('form.email')}
                             type="email"
                             fullWidth
                             variant="standard"
@@ -218,7 +221,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.password}
                             margin="dense"
                             id="worker-password"
-                            label="Password"
+                            label={t('form.password')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -232,7 +235,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.password2}
                             margin="dense"
                             id="worker-password2"
-                            label="Repeat password"
+                            label={t('form.password2')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -246,7 +249,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.first_name}
                             margin="dense"
                             id="worker-first_name"
-                            label="First name"
+                            label={t('form.first_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -260,7 +263,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.last_name}
                             margin="dense"
                             id="worker-last_name"
-                            label="Last name"
+                            label={t('form.last_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -270,12 +273,12 @@ export default function WorkerMenu(props) {
                             }}
                         />
                         <FormControl fullWidth variant="standard">
-                            <InputLabel id="demo-simple-select-label">Qualification</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('form.qualification')}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="worker-qualifications"
                                 value={qualification}
-                                label="Qualification"
+                                label={t('form.qualification')}
                                 onChange={(e) => {
                                     setQualification(e.target.value)
                                 }}
@@ -291,7 +294,7 @@ export default function WorkerMenu(props) {
                                 sx={{display: "flex"}}
                                 key={"worker-day_start"}
                                 variant="standard"
-                                label="Day start"
+                                label={t('form.day_start')}
                                 value={day_start}
                                 onChange={(newValue) => setDayStart(newValue)}
                             />
@@ -299,7 +302,7 @@ export default function WorkerMenu(props) {
                                 sx={{display: "flex"}}
                                 key={"worker-day_end"}
                                 variant="standard"
-                                label="Day end"
+                                label={t('form.day_end')}
                                 value={day_end}
                                 onChange={(newValue) => setDayEnd(newValue)}
                             />
@@ -309,7 +312,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.working_hours}
                             margin="dense"
                             id="worker-working_hours"
-                            label="Working hours"
+                            label={t('form.working_hours')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -323,7 +326,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.salary}
                             margin="dense"
                             id="worker-salary"
-                            label="Salary"
+                            label={t('form.salary')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -339,8 +342,8 @@ export default function WorkerMenu(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseEditForm}>Cancel</Button>
-                    <Button type="submit" form="workerCreateForm">Save</Button>
+                    <Button onClick={handleCloseEditForm}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="workerEditForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
             <Dialog
@@ -355,10 +358,10 @@ export default function WorkerMenu(props) {
                 <DialogContent>
                     <form onSubmit={handleSubmitDelete} id={`deleteWorkerForm-${workerData.id}`}>
                         <DialogContentText id="alert-worker-delete-description">
-                            Are you sure you want delete this account?<p/>
-                            This action will delete all statistics and history!
+                            {t('WorkersPage.delete_form_description_1')}<p/>
+                            {t('WorkersPage.delete_form_description_2')}
                             <p>
-                                Input username to continue:
+                                {t('WorkersPage.delete_form_description_3')}
                             </p>
                         </DialogContentText>
                         <TextField
@@ -367,7 +370,7 @@ export default function WorkerMenu(props) {
                             helperText={errors.delUsername}
                             margin="dense"
                             id="worker-username"
-                            label="Name"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -377,9 +380,9 @@ export default function WorkerMenu(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleCloseDeleteForm}>Cancel</Button>
+                    <Button autoFocus onClick={handleCloseDeleteForm}>{t('form.cancel')}</Button>
                     <Button color={"error"} type="submit" form={`deleteWorkerForm-${workerData.id}`}>
-                        Submit
+                        {t('form.delete')}
                     </Button>
                 </DialogActions>
             </Dialog>

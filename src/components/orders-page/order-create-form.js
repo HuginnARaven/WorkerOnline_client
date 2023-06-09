@@ -13,13 +13,14 @@ import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {createTechSupportMessage} from "../../store/user/techSupport/techSupportAction";
 import {useTranslation} from "react-i18next";
+import {createOrder} from "../../store/company/orders/ordersAction";
+import {redirect, useNavigate} from "react-router-dom";
 
-export default function TechSupportCreateForm() {
+export default function OrderCreateForm() {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
-    const [title, setTitle] = React.useState('');
-    const [description, setDescription] = React.useState('');
+    const [address, setAddress] = React.useState('');
     const [errors, setErrors] = useState({});
 
     const handleClickOpen = () => {
@@ -28,22 +29,21 @@ export default function TechSupportCreateForm() {
 
     const handleClose = () => {
         setOpen(false);
-        setTitle('');
-        setDescription('');
+        setAddress('');
         setErrors({});
     };
 
-    let messageData = {
-        title: title,
-        description: description,
+    let orderData = {
+        address_of_delivery: address,
     }
 
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(messageData)
-        const res = dispatch(createTechSupportMessage(messageData))
+        const res = dispatch(createOrder(orderData))
         res.then((value) => {
             console.log(value)
             if (value.error){
@@ -52,57 +52,39 @@ export default function TechSupportCreateForm() {
                 console.log(errors)
             }else {
                 handleClose();
+                navigate("/offers");
             }
         });
     };
 
     return (
         <div>
-            <Fab sx={{position: 'fixed', bottom: 16, right: 16,}} aria-label={'Add'} color={'primary'}
-                 onClick={handleClickOpen}>
-                <AddIcon/>
-            </Fab>
+            <Button size="small" onClick={handleClickOpen}>By now</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{t('TechSupportPage.create_form_title')}</DialogTitle>
+                <DialogTitle>{t('OrdersPage.create_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {t('TechSupportPage.create_form_description')}
+                        {t('OrdersPage.create_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="messageCreateForm">
                         <TextField
                             autoFocus
-                            error={errors.title}
-                            helperText={errors.title}
+                            error={errors.address}
+                            helperText={errors.address}
                             margin="dense"
-                            id="task-title"
-                            label={t('form.title')}
+                            id="order-address"
+                            label={t('form.address')}
                             type="text"
                             fullWidth
                             variant="standard"
-                            value={title}
+                            value={address}
                             onChange={(e) => {
-                                setTitle(e.target.value)
-                            }}
-                        />
-
-                        <TextField
-                            error={errors.description}
-                            helperText={errors.description}
-                            margin="dense"
-                            id="task-description"
-                            label={t('form.description')}
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            multiline
-                            value={description}
-                            onChange={(e) => {
-                                setDescription(e.target.value)
+                                setAddress(e.target.value)
                             }}
                         />
 
                         {Object.entries(errors).map((error) => (
-                            error[0] !== "title" && error[0] !== "description" ? (
+                            error[0] !== "address" ? (
                                 <Alert severity="error" sx={{mt: 1}}>{error[1]}</Alert>) : null
                         ))}
                     </form>

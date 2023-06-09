@@ -11,8 +11,10 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {editTask} from "../../store/company/tasks/tasksAction";
+import {useTranslation} from "react-i18next";
 
 export default function TaskUpdateForm(props) {
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
     const [title, setTitle] = React.useState(props.title);
@@ -60,13 +62,13 @@ export default function TaskUpdateForm(props) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Edit</Button>
+            <Button onClick={handleClickOpen}>{t('form.update')}</Button>
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task update form</DialogTitle>
+                <DialogTitle>{t('TasksPage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can change new task info
+                        {t('TasksPage.edit_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="qualificationCreateForm">
                         <TextField
@@ -75,7 +77,7 @@ export default function TaskUpdateForm(props) {
                             helperText={errors.title}
                             margin="dense"
                             id="task-title"
-                            label="Title"
+                            label={t('form.title')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -90,7 +92,7 @@ export default function TaskUpdateForm(props) {
                             helperText={errors.description}
                             margin="dense"
                             id="task-description"
-                            label="Description"
+                            label={t('form.description')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -106,7 +108,7 @@ export default function TaskUpdateForm(props) {
                             helperText={errors.estimate_hours}
                             margin="dense"
                             id="task-estimate_hours"
-                            label="Estimate hours"
+                            label={t('form.estimate_hours')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -117,12 +119,12 @@ export default function TaskUpdateForm(props) {
                         />
 
                         <FormControl fullWidth  variant="standard">
-                            <InputLabel id="demo-simple-select-label">Difficulty</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('form.difficulty')}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="task-difficulties"
                                 value={difficulty}
-                                label="Difficulty"
+                                label={t('form.difficulty')}
                                 onChange={(e) => {setDifficulty(e.target.value)}}
                             >
                                 {difficulties_list.map((difficulty_item) => (
@@ -138,8 +140,8 @@ export default function TaskUpdateForm(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="qualificationCreateForm">Save</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="qualificationCreateForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

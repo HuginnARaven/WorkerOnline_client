@@ -13,10 +13,11 @@ import WorkerChart from "./worker-chart";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import WorkerTasksStatistics from "./worker-tasks-statistics";
+import {useTranslation} from "react-i18next";
 
 
 export default function WorkerReportPage() {
-
+    const { t } = useTranslation();
     const {state} = useLocation();
     const {id} = state;
 
@@ -45,22 +46,22 @@ export default function WorkerReportPage() {
                         <Grid item>
                             <Paper sx={{p: 3}}>
                                 <Typography variant="h5" mb={3} textAlign={"center"}>
-                                    Worker info
+                                    {t('WorkerReportPage.worker_title')}
                                 </Typography>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    Username: {worker_report.username}
-                                </Typography>
-                                <Divider sx={{mt: 2, mb: 2}}/>
-                                <Typography variant="body1" textAlign={"left"}>
-                                    Email: {worker_report.email}
+                                    {t('form.username')}: {worker_report.username}
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    First name: {worker_report.first_name}
+                                    {t('form.email')}: {worker_report.email}
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    Last name: {worker_report.last_name}
+                                    {t('form.first_name')}: {worker_report.first_name}
+                                </Typography>
+                                <Divider sx={{mt: 2, mb: 2}}/>
+                                <Typography variant="body1" textAlign={"left"}>
+                                    {t('form.last_name')}: {worker_report.last_name}
                                 </Typography>
                             </Paper>
                         </Grid>

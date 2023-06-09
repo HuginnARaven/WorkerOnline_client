@@ -20,8 +20,10 @@ import {useState} from "react";
 import {createVoting, deleteVoting, editVoting} from "../../store/company/voting/votingAction";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
+import {useTranslation} from "react-i18next";
 
 export default function VotingMenu(props) {
+    const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [openEditForm, setOpenEditForm] = React.useState(false);
     const [openDeleteForm, setOpenDeleteForm] = React.useState(false);
@@ -145,15 +147,15 @@ export default function VotingMenu(props) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleEditClick}>Edit</MenuItem>
-                <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+                <MenuItem onClick={handleEditClick}>{t('form.update')}</MenuItem>
+                <MenuItem onClick={handleDeleteClick}>{t('form.delete')}</MenuItem>
             </Menu>
             <Dialog open={openEditForm} onClose={handleClose}>
-                <DialogTitle>Voting create form</DialogTitle>
+                <DialogTitle>{t('VotingPage.edit_form_title')}</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit} id="editVotingForm">
                         <DialogContentText>
-                            Here you can edit voting
+                            {t('VotingPage.edit_form_description')}
                         </DialogContentText>
                         <TextField
                             autoFocus
@@ -161,7 +163,7 @@ export default function VotingMenu(props) {
                             helperText={errors.title}
                             margin="dense"
                             id="title"
-                            label="Voting title"
+                            label={t('VotingPage.voting_title')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -175,7 +177,7 @@ export default function VotingMenu(props) {
                             helperText={errors.description}
                             margin="dense"
                             id="description"
-                            label="Voting description"
+                            label={t('VotingPage.voting_description')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -193,7 +195,7 @@ export default function VotingMenu(props) {
                                 inputProps={{'aria-label': 'controlled'}}
                                 sx={{color: red[800], '&.Mui-checked': {color: green[600],}}}/>
                             }
-                                          label="Is active: "/>
+                                          label={t('form.is_active') + ": "}/>
                         <TaskTransferField handleTaskChange={handleTaskChange} selected_tasks={tasks}/>
                         {errors.voting_tasks ?( <Alert sx={{mt:1}} severity="error">{errors.voting_tasks}</Alert>) : null}
                         <DateTimePicker
@@ -208,8 +210,8 @@ export default function VotingMenu(props) {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseEditForm}>Cancel</Button>
-                    <Button type="submit" form="editVotingForm">Save</Button>
+                    <Button onClick={handleCloseEditForm}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="editVotingForm">{t('form.save')}</Button>
                 </DialogActions>
             </Dialog>
             <Dialog
@@ -224,15 +226,15 @@ export default function VotingMenu(props) {
                 <DialogContent>
                     <form onSubmit={handleSubmitDelete} id="deleteVotingForm">
                     <DialogContentText id="alert-dialog-description">
-                        Are you sure you want delete this voting?<p/>
-                        This action will delete all answers and results!
+                        {t('VotingPage.delete_form_description_1')}<p/>
+                        {t('VotingPage.delete_form_description_2')}
                     </DialogContentText>
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDeleteForm} sx={{color: green[600]}}>Cancel</Button>
+                    <Button onClick={handleCloseDeleteForm}>{t('form.cancel')}</Button>
                     <Button autoFocus sx={{color: red[800]}} type="submit" form="deleteVotingForm">
-                        Submit
+                        {t('form.delete')}
                     </Button>
                 </DialogActions>
             </Dialog>

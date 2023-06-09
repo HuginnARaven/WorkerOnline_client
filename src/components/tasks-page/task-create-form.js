@@ -12,8 +12,10 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {createTask} from "../../store/company/tasks/tasksAction";
+import {useTranslation} from "react-i18next";
 
 export default function TaskCreateForm() {
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
     const [title, setTitle] = React.useState('');
@@ -69,10 +71,10 @@ export default function TaskCreateForm() {
                 <AddIcon/>
             </Fab>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Task create form</DialogTitle>
+                <DialogTitle>{t('TasksPage.create_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new tasks for your workers
+                        {t('TasksPage.create_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="qualificationCreateForm">
                         <TextField
@@ -81,7 +83,7 @@ export default function TaskCreateForm() {
                             helperText={errors.title}
                             margin="dense"
                             id="task-title"
-                            label="Title"
+                            label={t('form.title')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -96,7 +98,7 @@ export default function TaskCreateForm() {
                             helperText={errors.description}
                             margin="dense"
                             id="task-description"
-                            label="Description"
+                            label={t('form.description')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -112,7 +114,7 @@ export default function TaskCreateForm() {
                             helperText={errors.estimate_hours}
                             margin="dense"
                             id="task-estimate_hours"
-                            label="Estimate hours"
+                            label={t('form.estimate_hours')}
                             type="number"
                             fullWidth
                             variant="standard"
@@ -123,7 +125,7 @@ export default function TaskCreateForm() {
                         />
 
                         <FormControl fullWidth  variant="standard">
-                            <InputLabel id="demo-simple-select-label">Difficulty</InputLabel>
+                            <InputLabel id="demo-simple-select-label">{t('form.difficulty')}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="task-difficulties"
@@ -144,8 +146,8 @@ export default function TaskCreateForm() {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="qualificationCreateForm">Create</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="qualificationCreateForm">{t('form.create')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

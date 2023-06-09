@@ -11,9 +11,11 @@ import {CircularProgress} from "@mui/material";
 import {login, register} from "../../store/auth/authAction";
 import { useState } from 'react';
 import {getUser} from "../../store/user/userAction";
+import {useTranslation} from "react-i18next";
 
 export default function RegisterFormDialog() {
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -62,13 +64,13 @@ export default function RegisterFormDialog() {
     return (
         <div>
             <Button sx={{my: 2, color: 'white', display: 'block'}} onClick={handleClickOpen}>
-                Signup
+                {t('ProfilePage.signup')}
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Signup form</DialogTitle>
+                <DialogTitle>{t('ProfilePage.signup_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Register to use website!
+                        {t('ProfilePage.signup_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="registerForm">
                         <TextField
@@ -77,7 +79,7 @@ export default function RegisterFormDialog() {
                             helperText={errors.username}
                             margin="dense"
                             id="username"
-                            label="Username"
+                            label={t('form.username')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -88,7 +90,7 @@ export default function RegisterFormDialog() {
                             helperText={errors.email}
                             margin="dense"
                             id="email"
-                            label="Email"
+                            label={t('form.email')}
                             type="email"
                             fullWidth
                             variant="standard"
@@ -99,7 +101,7 @@ export default function RegisterFormDialog() {
                             helperText={errors.password}
                             margin="dense"
                             id="password"
-                            label="Password"
+                            label={t('form.password')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -110,7 +112,7 @@ export default function RegisterFormDialog() {
                             helperText={errors.password2}
                             margin="dense"
                             id="password2"
-                            label="Repeat password"
+                            label={t('form.password2')}
                             type="password"
                             fullWidth
                             variant="standard"
@@ -121,7 +123,7 @@ export default function RegisterFormDialog() {
                             helperText={errors.name}
                             margin="dense"
                             id="name"
-                            label="Company name"
+                            label={t('ProfilePage.company_name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -130,8 +132,8 @@ export default function RegisterFormDialog() {
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="registerForm">{is_loading ? <CircularProgress />: 'Signup'}</Button>
+                    <Button onClick={handleClose}>{t('form.cancel')}</Button>
+                    <Button type="submit" form="registerForm">{is_loading ? <CircularProgress />: t('ProfilePage.signup')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -12,6 +12,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import Alert from "@mui/material/Alert";
 import {createQualification} from "../../store/company/qualifications/qualificationsAction";
+import {useTranslation} from "react-i18next";
 
 export default function QualificationCreateForm(props) {
     const [open, setOpen] = React.useState(false);
@@ -19,6 +20,8 @@ export default function QualificationCreateForm(props) {
     const [name, setName] = React.useState(null);
     const [modifier, setModifier] = React.useState(null);
     const [errors, setErrors] = useState({});
+
+    const { t } = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -60,10 +63,10 @@ export default function QualificationCreateForm(props) {
                 <AddIcon />
             </Fab>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Qualification create form</DialogTitle>
+                <DialogTitle>{t('QualificationPage.create_form_title')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Here you can create new qualifications for your workers
+                        {t('QualificationPage.create_form_description')}
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="qualificationCreateForm">
                         <TextField
@@ -72,7 +75,7 @@ export default function QualificationCreateForm(props) {
                             helperText={errors.name}
                             margin="dense"
                             id="qualification-name"
-                            label="Name"
+                            label={t('form.name')}
                             type="text"
                             fullWidth
                             variant="standard"
@@ -85,7 +88,7 @@ export default function QualificationCreateForm(props) {
                                 helperText={errors.modifier}
                                 margin="dense"
                                 id="qualification-modifier"
-                                label="Modifier"
+                                label={t('form.modifier')}
                                 type="number"
                                 fullWidth
                                 variant="standard"

@@ -25,6 +25,13 @@ import WorkerReportPage from "./components/workers-page/worker-report-page/worke
 import ProfilePage from "./components/profile-page/profile-page";
 import TechSupportPage from "./components/tech-support-page/tech-support-page";
 import './i18n';
+import PricingPage from "./pages/pricingPage";
+import DevblogPage from "./pages/devblogPage";
+import ProductsPage from "./pages/productsPage";
+import OrdersPage from "./components/orders-page/orders-page";
+import {useMediaQuery} from "@mui/material";
+import 'dayjs/locale/uk';
+import 'dayjs/locale/en-gb';
 
 const getDesignTokens = (mode) => ({
     palette: {
@@ -67,7 +74,9 @@ function App() {
     }, [])
     const userType = useSelector((state) => state.user.role)
 
-    const [mode, setMode] = React.useState('light');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const [mode, setMode] = React.useState(prefersDarkMode ? 'dark' : 'light');
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
@@ -81,34 +90,28 @@ function App() {
 
     return (
         <div className="App">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
                 <ColorModeContext.Provider value={colorMode}>
                     <ThemeProvider theme={theme}>
                         <CssBaseline/>
                         <Routes>
                             <Route path="/" element={<Layout/>}>
                                 <Route path="/" element={<IndexPage/>}/>
-                                <Route path="qualifications"
-                                       element={userType === "C" ? <QualificationsPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="workers"
-                                       element={userType === "C" ? <WorkersPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="workers/report"
-                                       element={userType === "C" ? <WorkerReportPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="tasks"
-                                       element={userType === "C" ? <TasksPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="tasks-appointments" element={userType === "C" ? <TasksAppointmentsPage/> :
-                                    <Navigate to="/" replace/>}/>
-                                <Route path="workers-logs"
-                                       element={userType === "C" ? <WorkersLogsPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="pricing" element={<PricingPage/>}/>
+                                <Route path="devblog" element={<DevblogPage/>}/>
+                                <Route path="products" element={<ProductsPage/>}/>
+                                <Route path="qualifications" element={userType === "C" ? <QualificationsPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="workers" element={userType === "C" ? <WorkersPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="workers/report" element={userType === "C" ? <WorkerReportPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="tasks" element={userType === "C" ? <TasksPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="tasks-appointments" element={userType === "C" ? <TasksAppointmentsPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="workers-logs" element={userType === "C" ? <WorkersLogsPage/> : <Navigate to="/" replace/>}/>
                                 <Route path="iot" element={userType === "C" ? <IotPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="auto-appointment" element={userType === "C" ? <AutoAppointmentPage/> :
-                                    <Navigate to="/" replace/>}/>
-                                <Route path="profile"
-                                       element={userType === "C" ? <ProfilePage/> : <Navigate to="/" replace/>}/>
-                                <Route path="tech-support"
-                                       element={userType === "C" ? <TechSupportPage/> : <Navigate to="/" replace/>}/>
-                                <Route path="voting" element={userType === "C" ? (<VotingPage/>) : (userType === "W" ?
-                                    <WorkerVotingPage/> : <Navigate to="/" replace/>)}/>
+                                <Route path="auto-appointment" element={userType === "C" ? <AutoAppointmentPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="profile" element={userType === "C" ? <ProfilePage/> : <Navigate to="/" replace/>}/>
+                                <Route path="tech-support" element={userType === "C" ? <TechSupportPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="offers" element={userType === "C" ? <OrdersPage/> : <Navigate to="/" replace/>}/>
+                                <Route path="voting" element={userType === "C" ? (<VotingPage/>) : (userType === "W" ? <WorkerVotingPage/> : <Navigate to="/" replace/>)}/>
                             </Route>
                         </Routes>
                     </ThemeProvider>

@@ -14,8 +14,11 @@ import PasswordIcon from '@mui/icons-material/Password';
 import EditIcon from '@mui/icons-material/Edit';
 import ProfileEditForm from "./profile-edit-form";
 import PasswordChangeForm from "./password-change-form";
+import {useTranslation} from "react-i18next";
+import YardIcon from '@mui/icons-material/Yard';
 
 export default function ProfilePage() {
+    const { t } = useTranslation();
     const user_profile = useSelector((state) => state.user);
 
     return (
@@ -26,23 +29,23 @@ export default function ProfilePage() {
                         <Grid item>
                             <Paper sx={{p: 3}}>
                                 <Typography variant="h5" mb={3} textAlign={"center"}>
-                                    Profile info
+                                    {t('ProfilePage.profile_title')}
                                 </Typography>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    Username: {user_profile.username}
-                                </Typography>
-                                <Divider sx={{mt: 2, mb: 2}}/>
-                                <Typography variant="body1" textAlign={"left"}>
-                                    Email: {user_profile.email}
+                                    {t('form.username')}: {user_profile.username}
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    Company name: {user_profile.name}
+                                    {t('form.email')}: {user_profile.email}
+                                </Typography>
+                                <Divider sx={{mt: 2, mb: 2}}/>
+                                <Typography variant="body1" textAlign={"left"}>
+                                    {t('ProfilePage.company_name')}: {user_profile.name}
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                 <Stack direction={"column"}>
                                     <Typography variant="body1" textAlign={"center"}>
-                                        Description
+                                        {t('form.description')}
                                     </Typography>
                                     <br/>
                                     <Typography variant="body1" textAlign={"center"}>
@@ -51,7 +54,7 @@ export default function ProfilePage() {
                                 </Stack>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                 <Typography variant="body1" textAlign={"left"}>
-                                    Timezone: {user_profile.timezone}
+                                    {t('ProfilePage.timezone')}: {user_profile.timezone}
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}}/>
                                     <PasswordChangeForm/>

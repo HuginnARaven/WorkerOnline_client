@@ -19,7 +19,6 @@ const TitleText = props => <Title.Text {...props} style={titleStyle} />;
 export default class WorkerChart extends React.PureComponent {
     constructor(props) {
         super(props);
-
         this.state = {
             data: props.worker_statistics_by_days,
         };
